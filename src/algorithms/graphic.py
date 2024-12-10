@@ -17,10 +17,10 @@ class Graphic:
         ]
 
         # Pipeline
-        self.__classifier = transformers.pipeline(task='ner', model=path)
+        self.__classifier = transformers.pipeline(task='ner', model=path, device='cuda')
         logging.info(self.__classifier)
 
-    def ner(self, paragraph):
+    def __basic(self, paragraph):
         """
 
         :param paragraph:
@@ -31,7 +31,7 @@ class Graphic:
 
         return {'text': paragraph, 'entities': outcome}
 
-    def custom(self, paragraph):
+    def __custom(self, paragraph):
 
         tokens = self.__classifier(paragraph)
 
@@ -45,15 +45,15 @@ class Graphic:
 
         return {'text': paragraph, 'entities': tokens}, summary
 
-    def exc(self, spare: bool = True):
+    def exc(self, basic: bool = True):
 
-        if spare:
-            demo = gradio.Interface(self.ner,
+        if basic:
+            demo = gradio.Interface(self.__basic,
                                     gradio.Textbox(placeholder="Enter sentence here..."),
                                     gradio.HighlightedText(),
                                     examples=self.__examples)
         else:
-            demo = gradio.Interface(self.custom,
+            demo = gradio.Interface(self.__custom,
                                     gradio.Textbox(placeholder="Enter sentence here..."),
                                     [gradio.HighlightedText(), 'json'],
                                     examples=self.__examples)
