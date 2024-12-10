@@ -24,7 +24,7 @@ class Graphic:
     @staticmethod
     def __table(tokens) -> str:
         """
-        
+
         :param tokens:
         :return:
         """
@@ -36,7 +36,7 @@ class Graphic:
                 '<thead><tr><th>word</th><th>entity</th><th>score</th></tr></thead>')
 
         for token in tokens:
-            head = head + f"<tr><td>{token['word']}</td><td>{token['entity']}</td><td>{token['score']}</td></tr>"
+            head = head + f"<tr><td>{token['word']}</td><td>{token['entity']}</td><td>{token['score']:.3f}</td></tr>"
 
         head = head + '</table>'
 
