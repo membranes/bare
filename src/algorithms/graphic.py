@@ -45,9 +45,9 @@ class Graphic:
         :return:
         """
 
-        outcome = self.__classifier(paragraph)
+        tokens = self.__classifier(paragraph)
 
-        return {'text': paragraph, 'entities': outcome}
+        return {'text': paragraph, 'entities': tokens}
 
     def __custom(self, paragraph):
 
