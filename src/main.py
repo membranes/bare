@@ -28,10 +28,10 @@ def main():
     logger.info('Device: %s', device)
 
     # Hence
-    # src.data.interface.Interface(service=service, s3_parameters=s3_parameters).exc()
+    src.data.interface.Interface(service=service, s3_parameters=s3_parameters).exc()
     paths = glob.glob(os.path.join(root, 'data', '**', 'model'), recursive=True)
     src.algorithms.interface.Interface().exc(path=paths[0])
-    # src.algorithms.graphic.Graphic(path=paths[0]).exc()
+    src.algorithms.graphic.Graphic(path=paths[0]).exc()
 
     # Delete Cache Points
     src.functions.cache.Cache().exc()
