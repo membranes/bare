@@ -23,6 +23,11 @@ class Graphic:
 
     @staticmethod
     def __table(tokens) -> str:
+        """
+        
+        :param tokens:
+        :return:
+        """
 
         head = ('<table style="width: 55%; font-size: 65%; text-align: left;">'
                 '<colgroup>'
