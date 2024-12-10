@@ -29,11 +29,12 @@ class Graphic:
         :return:
         """
 
-        head = ('<table style="width: 55%; font-size: 65%; text-align: left;">'
-                '<colgroup>'
-                '<col span="1" style="width: 15%;"><col span="1" style="width: 15%;"><col span="1" style="width: 15%;">'
-                '</colgroup>'
-                '<thead><tr><th>word</th><th>entity</th><th>score</th></tr></thead>')
+        head = (
+            '<table style="width: 55%; font-size: 85%; text-align: left; border-collapse: collapse; border-spacing: 0;">'
+            '<colgroup>'
+            '<col span="1" style="width: 15%;"><col span="1" style="width: 15%;"><col span="1" style="width: 15%;">'
+            '</colgroup>'
+            '<thead style="background:black;font-color:white;"><tr><th>word</th><th>entity</th><th>score</th></tr></thead>')
 
         for token in tokens:
             head = head + f"<tr><td>{token['word']}</td><td>{token['entity']}</td><td>{token['score']:.3f}</td></tr>"
@@ -69,7 +70,7 @@ class Graphic:
         summary = {token['word']: [token['entity'], token['score']] for token in tokens}
         logging.info(summary)
 
-        return {'text': paragraph, 'entities': tokens}, summary
+        return {'text': paragraph, 'entities': tokens}, summary, table
 
     def exc(self, basic: bool = True):
         """
@@ -86,7 +87,7 @@ class Graphic:
         else:
             demo = gradio.Interface(self.__custom,
                                     gradio.Textbox(placeholder="Enter sentence here..."),
-                                    [gradio.HighlightedText(), 'json'],
+                                    [gradio.HighlightedText(), 'json', 'html'],
                                     examples=self.__examples,
                                     examples_per_page=1)
 
