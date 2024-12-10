@@ -1,7 +1,6 @@
 transformers==4.45.2
 accelerate
 gradio
-nltk>=3.9
 dask[complete]>=2024.6.2
 dask-expr
 graphviz>=0.20.3
@@ -9,9 +8,6 @@ pydot
 boto3>=1.35.11
 botocore>=1.35.11
 s3fs>=2024
-datasets
-seqeval[gpu]
-evaluate
 pandas>=2.2
 numpy>=1.26
 scipy>=1.13
