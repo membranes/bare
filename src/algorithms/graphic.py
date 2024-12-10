@@ -13,7 +13,8 @@ class Graphic:
 
         self.__examples = [
             'The English writer and the Afghani soldier.',
-            'It was written by members of the United Nation.'
+            'It was written by members of the United Nation.',
+            "Geoff Huggins is the Digital Directorate's director.  We met in Rome.  We had a business lunch at noon."
         ]
 
         # Pipeline
