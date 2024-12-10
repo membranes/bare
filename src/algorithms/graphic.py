@@ -12,10 +12,10 @@ class Graphic:
         """
 
         self.__examples = [
-            'The English writer and the Afghani soldier.',
-            'It was written by members of the United Nation.',
-            ('There were more than a hundred wolves in the Tiger Basin.  It is a dangerous place '
-            'after 9 p.m., especially near Lake Victoria.')]
+            ['The English writer and the Afghani soldier.'],
+            ['It was written by members of the United Nation.'],
+            [('There were more than a hundred wolves in the Tiger Basin.  It is a dangerous place '
+            'after 9 p.m., especially near Lake Victoria.')]]
 
         # Pipeline
         self.__classifier = transformers.pipeline(task='ner', model=path, device='cuda')
@@ -87,6 +87,7 @@ class Graphic:
             demo = gradio.Interface(self.__custom,
                                     gradio.Textbox(placeholder="Enter sentence here..."),
                                     [gradio.HighlightedText(), 'json'],
-                                    examples=self.__examples)
+                                    examples=self.__examples,
+                                    examples_per_page=1)
 
         demo.launch()
