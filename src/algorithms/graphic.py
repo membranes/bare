@@ -53,11 +53,6 @@ class Graphic:
 
         tokens = self.__classifier(paragraph)
 
-        highlight = []
-        for token in tokens:
-            highlight.extend([(token['word'], token['entity']), (' ', None)])
-        logging.info(highlight)
-
         summary = {token['word']: [token['entity'], token['score']] for token in tokens}
         logging.info(summary)
 
