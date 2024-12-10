@@ -1,11 +1,16 @@
+"""Module interface.py"""
 import logging
 
-import transformers
-
 import config
+import src.algorithms.cli
+import src.algorithms.graphic
+
 
 
 class Interface:
+    """
+    Offers interaction interfaces.
+    """
 
     def __init__(self):
         """
@@ -20,20 +25,17 @@ class Interface:
                             datefmt='%Y-%m-%d %H:%M:%S')
         self.__logger = logging.getLogger(__name__)
 
-    def exc(self, path: str):
+    def exc(self, path: str, cli: bool = False):
         """
-        os.path.join(configurations.artefacts_, '...', 'prime', 'model')
 
+        :param path: The model's path
+        :param cli: Explore via command line interface?
         :return:
         """
 
-        # Sample Text
-        paragraph = 'The English writer and the Afghani soldier, both live in Algeria.'
-        self.__logger.info(paragraph)
+        if cli:
+            self.__logger.info('Via CLI: ')
+            src.algorithms.cli.CLI().exc(path=path)
 
-        # Pipeline
-        classifier = transformers.pipeline(task='ner', model=path, device='cuda')
-        self.__logger.info(classifier)
-
-        # Hence
-        self.__logger.info(classifier(paragraph))
+        self.__logger.info('Via Interface: ')
+        src.algorithms.graphic.Graphic(path=path).exc(basic=False)
