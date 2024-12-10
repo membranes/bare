@@ -13,12 +13,30 @@ class Graphic:
 
         self.__examples = [
             'The English writer and the Afghani soldier.',
-            'It was written by members of the United Nation.'
+            'It was written by members of the United Nation.',
+            ('There were more than a hundred wolves in the Tiger Basin.  It is a dangerous place '
+            'after 9 p.m., especially near Lake Victoria.')
         ]
 
         # Pipeline
         self.__classifier = transformers.pipeline(task='ner', model=path, device='cuda')
         logging.info(self.__classifier)
+
+    def __table(self, tokens) -> str:
+
+        head = ('<table style="width: 55%; font-size: 65%; text-align: left;">'
+                '<colgroup>'
+                '<col span="1" style="width: 15%;"><col span="1" style="width: 15%;"><col span="1" style="width: 15%;">'
+                '</colgroup>'
+                '<thead><tr><th>word</th><th>entity</th><th>score</th></tr></thead>')
+
+        for token in tokens:
+            head = head + f"<tr><td>{token['word']}</td><td>{token['entity']}</td><td>{token['score']}</td></tr>"
+
+        head = head + '</table>'
+
+        return head
+
 
     def __basic(self, paragraph):
         """
