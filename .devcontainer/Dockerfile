@@ -2,11 +2,6 @@
 FROM pytorch/pytorch:2.4.1-cuda12.4-cudnn9-runtime
 
 
-# Settings
-ARG GRADIO_SERVER_PORT=7860
-ENV GRADIO_SERVER_PORT=${GRADIO_SERVER_PORT}
-
-
 # If the steps of a `Dockerfile` use files that are different from the `context` file, COPY the
 # file of each step separately; and RUN the file immediately after COPY
 WORKDIR /app
@@ -31,6 +26,13 @@ RUN apt update && apt -q -y upgrade && apt -y install sudo && sudo apt -y instal
 # Ports
 # GRADIO 7860, Spare 8000
 EXPOSE 7860 8000
+
+
+# Setting-up
+ARG GRADIO_SERVER_PORT=7860
+
+ENV GRADIO_SERVER_PORT=${GRADIO_SERVER_PORT}
+ENV GRADIO_SERVER_NAME='0.0.0.0'
 
 
 # ENTRYPOINT
