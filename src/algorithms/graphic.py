@@ -15,14 +15,14 @@ class Graphic:
             'The English writer and the Afghani soldier.',
             'It was written by members of the United Nation.',
             ('There were more than a hundred wolves in the Tiger Basin.  It is a dangerous place '
-            'after 9 p.m., especially near Lake Victoria.')
-        ]
+            'after 9 p.m., especially near Lake Victoria.')]
 
         # Pipeline
         self.__classifier = transformers.pipeline(task='ner', model=path, device='cuda')
         logging.info(self.__classifier)
 
-    def __table(self, tokens) -> str:
+    @staticmethod
+    def __table(tokens) -> str:
 
         head = ('<table style="width: 55%; font-size: 65%; text-align: left;">'
                 '<colgroup>'
@@ -50,8 +50,16 @@ class Graphic:
         return {'text': paragraph, 'entities': tokens}
 
     def __custom(self, paragraph):
+        """
+
+        :param paragraph:
+        :return:
+        """
 
         tokens = self.__classifier(paragraph)
+
+        table = self.__table(tokens=tokens)
+        logging.info(table)
 
         summary = {token['word']: [token['entity'], token['score']] for token in tokens}
         logging.info(summary)
@@ -59,6 +67,11 @@ class Graphic:
         return {'text': paragraph, 'entities': tokens}, summary
 
     def exc(self, basic: bool = True):
+        """
+
+        :param basic: Basic interface?
+        :return:
+        """
 
         if basic:
             demo = gradio.Interface(self.__basic,
