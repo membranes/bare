@@ -74,13 +74,9 @@ class Graphic:
         """
 
         tokens = self.__classifier(paragraph)
-
-        table = self.__table(tokens=tokens)
-        logging.info(table)
-
         summary = {token['word']: [token['entity'], token['score']] for token in tokens}
-        logging.info(summary)
-
+        table = self.__table(tokens=tokens)
+        
         return {'text': paragraph, 'entities': tokens}, summary, table
 
     def exc(self, basic: bool = True):
