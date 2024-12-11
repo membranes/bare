@@ -1,8 +1,8 @@
 """Module main.py"""
+import glob
 import logging
 import os
 import sys
-import glob
 
 import boto3
 import torch
