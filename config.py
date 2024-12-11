@@ -19,4 +19,7 @@ class Config:
         self.warehouse = os.path.join(os.getcwd(), 'warehouse')
         self.data_ = os.path.join(os.getcwd(), 'data')
         self.artefacts_ = os.path.join(self.data_, 'artefacts')
+
+        # Amazon
         self.s3_parameters_key = 's3_parameters.yaml'
+        self.architecture_key = 'warehouse/numerics/best/architecture.json'
