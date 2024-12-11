@@ -98,7 +98,7 @@ class Graphic:
         else:
             demo = gradio.Interface(self.__custom,
                                     gradio.Textbox(placeholder="Enter sentence here..."),
-                                    [gradio.HighlightedText(), 'json', 'html'],
+                                    [gradio.HighlightedText(), 'html', 'json'],
                                     examples=self.__examples, examples_per_page=1,
                                     title='Token Classification',
                                     description=('<b>An illustrative interactive interface; the interface '
