@@ -43,7 +43,9 @@ class Graphic:
             '<colgroup>'
             '<col span="1" style="width: 10%;"><col span="1" style="width: 10%;"><col span="1" style="width: 10%;">'
             '</colgroup>'
-            '<thead style="background: orange; font-weight: bold;"><tr><th>word</th><th>entity</th><th>score</th></tr></thead>')
+            '<thead style="background: orange; font-weight: bold;">'
+            '<tr><th>word</th><th>entity</th><th>score</th></tr>'
+            '</thead>')
 
         for token in tokens:
             head = head + f"<tr><td>{token['word']}</td><td>{token['entity']}</td><td>{token['score']:.3f}</td></tr>"
