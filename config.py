@@ -20,6 +20,9 @@ class Config:
         self.data_ = os.path.join(os.getcwd(), 'data')
         self.artefacts_ = os.path.join(self.data_, 'artefacts')
 
+        # Temporary; future argument.
+        self.device = 'cpu'
+
         # Amazon
         self.s3_parameters_key = 's3_parameters.yaml'
         self.architecture_key = 'warehouse/numerics/best/architecture.json'
