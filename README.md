@@ -5,7 +5,7 @@
 
 <br>
 
-We can interact with the token classification project's model via an instance, i.e., container, of this repository's image. 
+We can interact with the token classification project's model via an instance, i.e., container, of this repository's image.  Initially set-up to use a machine's CPU (Central Processing Unit) device. **A later image update** will accept an argument; either 'cpu' or 'cuda'.
 
 <br>
 
