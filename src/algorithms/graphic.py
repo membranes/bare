@@ -25,7 +25,7 @@ class Graphic:
         self.__examples = config.Config().examples
 
         # Pipeline
-        self.__classifier = transformers.pipeline(task='ner', model=path, device='cuda')
+        self.__classifier = transformers.pipeline(task='ner', model=path, device='cpu')
         logging.info(self.__classifier)
 
     @staticmethod
