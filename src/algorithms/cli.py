@@ -3,8 +3,6 @@ import logging
 
 import transformers
 
-import config
-
 
 class CLI:
     """
@@ -16,8 +14,6 @@ class CLI:
         Constructor
         """
 
-        self.__configurations = config.Config()
-
         # Logging
         logging.basicConfig(level=logging.INFO,
                             format='\n\n%(message)s\n%(asctime)s.%(msecs)30d',
@@ -26,18 +22,16 @@ class CLI:
 
     def exc(self, path: str):
         """
-        'The English writer and the Afghani soldier, both live in Algeria.'
 
         :return:
         """
 
         # Sample Text
-        paragraph = input('A sentence please: ')
-        self.__logger.info(paragraph)
+        sentence = input('A sentence please: ')
+        self.__logger.info('Sentence: %s', sentence)
 
         # Pipeline
-        classifier = transformers.pipeline(task='ner', model=path, device='cuda')
-        self.__logger.info(classifier)
+        classifier = transformers.pipeline(task='ner', model=path, device='cpu')
 
         # Hence
-        self.__logger.info(classifier(paragraph))
+        self.__logger.info(classifier(sentence))
