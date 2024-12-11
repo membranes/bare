@@ -22,10 +22,10 @@ class Graphic:
         :param path: The model's path
         """
 
-        self.__examples = config.Config().examples
+        self.__configurations = config.Config()
 
         # Pipeline
-        self.__classifier = transformers.pipeline(task='ner', model=path, device='cpu')
+        self.__classifier = transformers.pipeline(task='ner', model=path, device=self.__configurations.device)
         logging.info(self.__classifier)
 
     @staticmethod
@@ -94,12 +94,12 @@ class Graphic:
             demo = gradio.Interface(self.__basic,
                                     gradio.Textbox(placeholder="Enter sentence here..."),
                                     gradio.HighlightedText(),
-                                    examples=self.__examples)
+                                    examples=self.__configurations.examples)
         else:
             demo = gradio.Interface(self.__custom,
                                     gradio.Textbox(placeholder="Enter sentence here..."),
                                     [gradio.HighlightedText(), 'html', 'json'],
-                                    examples=self.__examples, examples_per_page=1,
+                                    examples=self.__configurations.examples, examples_per_page=1,
                                     title='Token Classification',
                                     description=('<b>An illustrative interactive interface; the interface '
                                                 'software allows for advanced interfaces.</b>'),
