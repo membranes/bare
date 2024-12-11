@@ -1,9 +1,18 @@
+"""Module graphic.py"""
 import logging
 import transformers
 import gradio
 
 
 class Graphic:
+    """
+    Notes<br>
+    -----<br>
+
+    This class launches an illustrative graphical user interface for interacting
+    with the token classification model.  It can be as simple or advanced as required
+    because the underlying software allows for extensive customisation.
+    """
 
     def __init__(self, path: str):
         """
