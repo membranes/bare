@@ -23,3 +23,10 @@ class Config:
         # Amazon
         self.s3_parameters_key = 's3_parameters.yaml'
         self.architecture_key = 'warehouse/numerics/best/architecture.json'
+
+        # Examples
+        self.examples = [
+            ['The English writer and the Afghani soldier.'],
+            ['It was written by members of the United Nation.'],
+            [('There were more than a hundred wolves in the Tiger Basin.  It is a dangerous place '
+              'after 9 p.m., especially near Lake Victoria.')]]
