@@ -1,15 +1,19 @@
+"""Module interface.py"""
 import json
 import logging
 
+import config
+import src.data.artefacts
 import src.elements.s3_parameters as s3p
 import src.elements.service as sr
-import src.s3.unload
-
-import src.data.artefacts
 import src.s3.directives
+import src.s3.unload
 
 
 class Interface:
+    """
+    Interface
+    """
 
     def __init__(self, service: sr.Service, s3_parameters: s3p.S3Parameters):
         """
@@ -28,7 +32,7 @@ class Interface:
                             datefmt='%Y-%m-%d %H:%M:%S')
         self.__logger = logging.getLogger(__name__)
 
-    def __get_dictionary(self, key_name: str) -> dict:
+    def __get_architecture(self, key_name: str) -> str:
         """
         s3:// {bucket.name} / {key.name}
 
@@ -40,20 +44,22 @@ class Interface:
             bucket_name=self.__s3_parameters.external, key_name=key_name)
         dictionary = json.loads(buffer)
 
-        return dictionary
+        return dictionary['name']
 
     def exc(self):
+        """
 
+        :return:
+        """
 
-        key_name = 'warehouse/numerics/best/architecture.json'
-        dictionary = self.__get_dictionary(key_name=key_name)
-        logging.info(dictionary['name'])
+        architecture = self.__get_architecture(key_name=config.Config().architecture_key)
+        logging.info('The best model, named by its underlying architecture: %s', architecture)
 
         # Get the artefacts metadata
         strings = src.data.artefacts.Artefacts(
-            service=self.__service, s3_parameters=self.__s3_parameters).exc(architecture=dictionary['name'])
+            service=self.__service, s3_parameters=self.__s3_parameters).exc(architecture=architecture)
 
         # Retrieve the artefacts
-        states = src.s3.directives.Directives(s3_parameters=self.__s3_parameters).exc(
+        messages = src.s3.directives.Directives(s3_parameters=self.__s3_parameters).exc(
             source=strings['source'], destination=strings['destination'])
-        self.__logger.info(states)
+        self.__logger.info(messages)
