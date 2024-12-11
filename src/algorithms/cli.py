@@ -3,6 +3,8 @@ import logging
 
 import transformers
 
+import config
+
 
 class CLI:
     """
@@ -31,7 +33,7 @@ class CLI:
         self.__logger.info('Sentence: %s', sentence)
 
         # Pipeline
-        classifier = transformers.pipeline(task='ner', model=path, device='cpu')
+        classifier = transformers.pipeline(task='ner', model=path, device=config.Config().device)
 
         # Hence
         self.__logger.info(classifier(sentence))
