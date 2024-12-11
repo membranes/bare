@@ -30,11 +30,11 @@ class Graphic:
         """
 
         head = (
-            '<table style="width: 55%; font-size: 85%; text-align: left; border-collapse: collapse; border-spacing: 0;">'
+            '<table style="width: 35%; font-size: 90%; text-align: left;">'
             '<colgroup>'
-            '<col span="1" style="width: 15%;"><col span="1" style="width: 15%;"><col span="1" style="width: 15%;">'
+            '<col span="1" style="width: 10%;"><col span="1" style="width: 10%;"><col span="1" style="width: 10%;">'
             '</colgroup>'
-            '<thead style="background:black;font-color:white;"><tr><th>word</th><th>entity</th><th>score</th></tr></thead>')
+            '<thead style="background: orange; font-weight: bold;"><tr><th>word</th><th>entity</th><th>score</th></tr></thead>')
 
         for token in tokens:
             head = head + f"<tr><td>{token['word']}</td><td>{token['entity']}</td><td>{token['score']:.3f}</td></tr>"
@@ -79,6 +79,12 @@ class Graphic:
         :return:
         """
 
+        css = ('.gradio-container-5-8-0 .prose table, .gradio-container-5-8-0 .prose tr, '
+               '.gradio-container-5-8-0 .prose td, .gradio-container-5-8-0 .prose th '
+               '{border:0 solid var(--body-text-color);}'
+               '.paginate.svelte-p5q82i.svelte-p5q82i.svelte-p5q82i '
+               '{justify-content:left; font-size:var(--text-md); margin-left: 10px;}')
+
         if basic:
             demo = gradio.Interface(self.__basic,
                                     gradio.Textbox(placeholder="Enter sentence here..."),
@@ -89,6 +95,6 @@ class Graphic:
                                     gradio.Textbox(placeholder="Enter sentence here..."),
                                     [gradio.HighlightedText(), 'json', 'html'],
                                     examples=self.__examples,
-                                    examples_per_page=1)
+                                    examples_per_page=1, css=css)
 
         demo.launch()
