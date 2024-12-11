@@ -27,11 +27,12 @@ def main():
     device = 'cuda' if torch.cuda.is_available() else 'cpu'
     logger.info('Device: %s', device)
 
-    # Hence
+    # The artefacts
     src.data.interface.Interface(service=service, s3_parameters=s3_parameters).exc()
+
+    # Explore/Interact
     paths = glob.glob(os.path.join(root, 'data', '**', 'model'), recursive=True)
     src.algorithms.interface.Interface().exc(path=paths[0])
-    src.algorithms.graphic.Graphic(path=paths[0]).exc()
 
     # Delete Cache Points
     src.functions.cache.Cache().exc()
@@ -57,7 +58,6 @@ if __name__ == '__main__':
 
     # Classes
     import src.algorithms.interface
-    import src.algorithms.graphic
     import src.data.interface
     import src.functions.service
     import src.functions.cache
