@@ -1,7 +1,6 @@
 """Module interface.py"""
 import logging
 
-import config
 import src.algorithms.cli
 import src.algorithms.graphic
 
@@ -16,8 +15,6 @@ class Interface:
         """
         Constructor
         """
-
-        self.__configurations = config.Config()
 
         # Logging
         logging.basicConfig(level=logging.INFO,
