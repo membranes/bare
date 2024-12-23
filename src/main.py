@@ -3,6 +3,7 @@ import argparse
 import logging
 import os
 import sys
+import glob
 
 import boto3
 
@@ -17,18 +18,20 @@ def main():
     logger: logging.Logger = logging.getLogger(__name__)
 
     # Set up
-    setup: bool = src.setup.Setup(service=service, s3_parameters=s3_parameters).exc()
+    setup: bool = src.setup.Setup(service=service, s3_parameters=s3_parameters).exc(reacquire=reacquire)
     if not setup:
         src.functions.cache.Cache().exc()
         sys.exit('No Executions')
 
     # ...
-    logger.info(reacquire)
     if reacquire:
         src.data.interface.Interface(service=service, s3_parameters=s3_parameters).exc()
 
+    # ...
+    paths = glob.glob(os.path.join(root, 'data', '**', 'model'), recursive=True)
+    logger.info(paths)
+
     # Explore/Interact
-    # paths = glob.glob(os.path.join(root, 'data', '**', 'model'), recursive=True)
     # src.algorithms.interface.Interface().exc(path=paths[0])
 
     # Delete Cache Points
