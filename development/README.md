@@ -84,6 +84,21 @@ IDEA** set up involves connecting to a machine's Docker [daemon](https://www.jet
 <br>
 <br>
 
+## Devices
+
+An auto method for device selection is
+
+```shell
+import logging
+import torch
+
+device = 'cuda' if torch.cuda.is_available() else 'cpu'
+logging.info('Device: %s', device)
+```
+
+<br>
+<br>
+
 
 ## Code Analysis
 
