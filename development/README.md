@@ -174,6 +174,9 @@ Interfaces:
 * [Generators](https://jamstack.org/generators/)
   * [11ty](https://www.11ty.dev)
 
+Amazon:
+* [Prefixes](https://docs.aws.amazon.com/AmazonS3/latest/userguide/using-prefixes.html)
+
 <br>
 <br>
 
