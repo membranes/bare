@@ -25,7 +25,6 @@ class Config:
 
         # Amazon
         self.s3_parameters_key = 's3_parameters.yaml'
-        self.architecture_key = 'warehouse/numerics/best/architecture.json'
 
         # Examples
         self.examples = [
