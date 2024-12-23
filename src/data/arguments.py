@@ -16,7 +16,7 @@ class Arguments:
         pass
 
     @staticmethod
-    def reacquire__(value: str) -> bool:
+    def reacquire(value: str) -> bool:
         """
 
         :param value: Either True or False.  In answer to the question - Should the model
