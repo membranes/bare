@@ -18,7 +18,6 @@ class Config:
 
         self.warehouse = os.path.join(os.getcwd(), 'warehouse')
         self.data_ = os.path.join(os.getcwd(), 'data')
-        self.artefacts_ = os.path.join(self.data_, 'artefacts')
 
         # Temporary; future argument, or auto determination.
         self.device = 'cpu'
