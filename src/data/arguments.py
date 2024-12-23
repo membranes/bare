@@ -1,3 +1,4 @@
+"""Module arguments.py"""
 import logging
 import argparse
 
@@ -28,8 +29,9 @@ class Arguments:
 
         try:
             status = bool(value.capitalize())
-        except ValueError:
-            raise argparse.ArgumentTypeError(f'In answer to the question - Should the model artefacts be reacquired? - the '
-                                             f'argument value must be either True or False')
+        except ValueError as err:
+            raise argparse.ArgumentTypeError('In answer to the question - Should the model artefacts be reacquired? - the '
+                                             'argument value must be either True or False') \
+                from err
 
         return status
