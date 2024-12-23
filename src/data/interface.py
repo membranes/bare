@@ -40,6 +40,13 @@ class Interface:
 
     @dask.delayed
     def __get_assets(self, source_bucket: str, origin: str, target: str):
+        """
+        
+        :param source_bucket:
+        :param origin:
+        :param target:
+        :return:
+        """
 
         return self.__directives.synchronise(
             source_bucket=source_bucket, origin=origin, target=target)
@@ -51,7 +58,8 @@ class Interface:
         :return:
         """
 
-        # Get the artefacts metadata
+        # Get the artefacts metadata; the prefix is the string between
+        # a bucket name and one or more key names, herein it starts and ends without a stroke, i.e., /.
         strings = src.data.artefacts.Artefacts(
             service=self.__service).exc(source_bucket=self.__source_bucket, prefix='warehouse/numerics/best/model')
 
