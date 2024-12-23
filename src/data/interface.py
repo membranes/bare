@@ -1,6 +1,4 @@
 """Module interface.py"""
-import json
-import logging
 import sys
 
 import dask
@@ -14,7 +12,11 @@ import src.s3.unload
 
 class Interface:
     """
-    Interface
+    Notes<br>
+    ------<br>
+
+    An interface to the data/artefacts retrieval class.  <b>Beware, sometimes dask
+    will be unnecessary, edit accordingly.</b>
     """
 
     def __init__(self, service: sr.Service, s3_parameters: s3p.S3Parameters):
@@ -32,12 +34,6 @@ class Interface:
         # Directives
         self.__directives = src.s3.directives.Directives()
 
-        # Logging
-        logging.basicConfig(level=logging.INFO,
-                            format='\n\n%(message)s\n%(asctime)s.%(msecs)03d',
-                            datefmt='%Y-%m-%d %H:%M:%S')
-        self.__logger = logging.getLogger(__name__)
-
     @dask.delayed
     def __get_assets(self, source_bucket: str, origin: str, target: str):
         """
@@ -50,7 +46,6 @@ class Interface:
 
         return self.__directives.synchronise(
             source_bucket=source_bucket, origin=origin, target=target)
-
 
     def exc(self):
         """
