@@ -23,11 +23,9 @@ def main():
         src.functions.cache.Cache().exc()
         sys.exit('No Executions')
 
-    # Device Selection: Setting a graphics processing unit as the default device
-    device = 'cuda' if torch.cuda.is_available() else 'cpu'
-    logger.info('Device: %s', device)
-
-    # The artefacts
+    # IN PROGRESS
+    # The Artefacts: Set up a condition [in json, yaml], initially false, then true after
+    # the first artefact's retrieval.
     src.data.interface.Interface(service=service, s3_parameters=s3_parameters).exc()
 
     # Explore/Interact
@@ -53,7 +51,6 @@ if __name__ == '__main__':
     # Activate graphics processing units
     os.environ['CUDA_VISIBLE_DEVICES']='0'
     os.environ['TOKENIZERS_PARALLELISM']='true'
-    os.environ['RAY_USAGE_STATS_ENABLED']='0'
     os.environ['HF_HOME']='/tmp'
 
     # Classes
