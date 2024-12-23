@@ -41,7 +41,7 @@ class Interface:
     @dask.delayed
     def __get_assets(self, source_bucket: str, origin: str, target: str):
         """
-        
+
         :param source_bucket:
         :param origin:
         :param target:
