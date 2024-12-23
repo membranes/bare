@@ -64,14 +64,15 @@ class Artefacts:
     def exc(self, source_bucket: str, prefix: str) -> pd.DataFrame:
         """
         Determining the unique segments of a prefix.  Remember, a prefix is the string between
-        a bucket name and a key name; start and end without a stroke, i.e., /
+        a bucket name and a key name; starts and ends without a stroke, i.e., /.
 
+        :param source_bucket:
+        :param prefix:
         :return:
         """
 
         # The keys within the prefix
         keys = self.__keys(source_bucket=source_bucket, prefix=prefix)
-
 
         # Hence, the distinct paths
         sources = np.array([os.path.dirname(k) for k in keys])
