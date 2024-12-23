@@ -1,8 +1,10 @@
 """Module interface.py"""
 import json
 import logging
+import sys
 
-import config
+import dask
+
 import src.data.artefacts
 import src.elements.s3_parameters as s3p
 import src.elements.service as sr
@@ -25,6 +27,10 @@ class Interface:
 
         self.__service: sr.Service = service
         self.__s3_parameters: s3p.S3Parameters = s3_parameters
+        self.__source_bucket = self.__s3_parameters.external
+
+        # Directives
+        self.__directives = src.s3.directives.Directives()
 
         # Logging
         logging.basicConfig(level=logging.INFO,
@@ -32,19 +38,12 @@ class Interface:
                             datefmt='%Y-%m-%d %H:%M:%S')
         self.__logger = logging.getLogger(__name__)
 
-    def __get_architecture(self, key_name: str) -> str:
-        """
-        s3:// {bucket.name} / {key.name}
+    @dask.delayed
+    def __get_assets(self, source_bucket: str, origin: str, target: str):
 
-        :param key_name: prefix, file name, file extension
-        :return:
-        """
+        return self.__directives.synchronise(
+            source_bucket=source_bucket, origin=origin, target=target)
 
-        buffer = src.s3.unload.Unload(s3_client=self.__service.s3_client).exc(
-            bucket_name=self.__s3_parameters.external, key_name=key_name)
-        dictionary = json.loads(buffer)
-
-        return dictionary['name']
 
     def exc(self):
         """
@@ -52,14 +51,18 @@ class Interface:
         :return:
         """
 
-        architecture = self.__get_architecture(key_name=config.Config().architecture_key)
-        logging.info('The best model, named by its underlying architecture: %s', architecture)
-
         # Get the artefacts metadata
         strings = src.data.artefacts.Artefacts(
-            service=self.__service, s3_parameters=self.__s3_parameters).exc(architecture=architecture)
+            service=self.__service).exc(source_bucket=self.__source_bucket, prefix='warehouse/numerics/best/model')
 
-        # Retrieve the artefacts
-        messages = src.s3.directives.Directives(s3_parameters=self.__s3_parameters).exc(
-            source=strings['source'], destination=strings['destination'])
-        self.__logger.info(messages)
+        # Compute
+        computation = []
+        for origin, target in zip(strings['source'], strings['destination']):
+            state = self.__get_assets(source_bucket=self.__source_bucket, origin=origin, target=target)
+            computation.append(state)
+        executions: list[int] = dask.compute(computation, scheduler='threads')[0]
+
+        if all(executions) == 0:
+            return True
+
+        sys.exit('Artefacts download step failure.')
