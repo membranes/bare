@@ -1,3 +1,4 @@
+import logging
 import argparse
 
 class Reacquire:
@@ -15,7 +16,7 @@ class Reacquire:
         pass
 
     @staticmethod
-    def reacquire_artefacts(value: str = False) -> bool:
+    def reacquire__(value: str) -> bool:
         """
 
         :param value: Either True or False.  In answer to the question - Should the model
@@ -23,9 +24,11 @@ class Reacquire:
         :return:
         """
 
+        logging.info('Latest: %s', value)
+
         try:
             status = bool(value.capitalize())
-        except ValueError as err:
+        except ValueError:
             raise argparse.ArgumentTypeError(f'In answer to the question - Should the model artefacts be reacquired? - the '
                                              f'argument value must be either True or False')
 
