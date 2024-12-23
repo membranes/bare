@@ -1,4 +1,5 @@
 """Module main.py"""
+import argparse
 import glob
 import logging
 import os
@@ -23,10 +24,9 @@ def main():
         src.functions.cache.Cache().exc()
         sys.exit('No Executions')
 
-    # IN PROGRESS
-    # The Artefacts: Set up a condition [in json, yaml], initially false, then true after
-    # the first artefact's retrieval.
-    src.data.interface.Interface(service=service, s3_parameters=s3_parameters).exc()
+    # ...
+    if args.reacquire_artefacts:
+        src.data.interface.Interface(service=service, s3_parameters=s3_parameters).exc()
 
     # Explore/Interact
     paths = glob.glob(os.path.join(root, 'data', '**', 'model'), recursive=True)
@@ -56,10 +56,20 @@ if __name__ == '__main__':
     # Classes
     import src.algorithms.interface
     import src.data.interface
+    import src.data.reacquire
     import src.functions.service
     import src.functions.cache
     import src.s3.s3_parameters
     import src.setup
+
+    # Arguments
+    reacquire = src.data.reacquire.Reacquire()
+    parser = argparse.ArgumentParser()
+    parser.add_argument('--reacquire', type=reacquire.reacquire_artefacts,
+                        help=('Either True or False.  In answer to the question - '
+                              'Should the model artefacts be reacquired?'))
+    args = parser.parse_args()
+
 
     # S3 S3Parameters, Service Instance
     connector = boto3.session.Session()
