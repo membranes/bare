@@ -1,12 +1,10 @@
 """Module main.py"""
 import argparse
-import glob
 import logging
 import os
 import sys
 
 import boto3
-import torch
 
 
 def main():
@@ -25,12 +23,13 @@ def main():
         sys.exit('No Executions')
 
     # ...
-    if args.reacquire_artefacts:
+    logger.info(reacquire)
+    if reacquire:
         src.data.interface.Interface(service=service, s3_parameters=s3_parameters).exc()
 
     # Explore/Interact
-    paths = glob.glob(os.path.join(root, 'data', '**', 'model'), recursive=True)
-    src.algorithms.interface.Interface().exc(path=paths[0])
+    # paths = glob.glob(os.path.join(root, 'data', '**', 'model'), recursive=True)
+    # src.algorithms.interface.Interface().exc(path=paths[0])
 
     # Delete Cache Points
     src.functions.cache.Cache().exc()
@@ -56,19 +55,22 @@ if __name__ == '__main__':
     # Classes
     import src.algorithms.interface
     import src.data.interface
-    import src.data.reacquire
+    import src.data.arguments
     import src.functions.service
     import src.functions.cache
     import src.s3.s3_parameters
     import src.setup
 
     # Arguments
-    reacquire = src.data.reacquire.Reacquire()
+    arguments = src.data.arguments.Arguments()
     parser = argparse.ArgumentParser()
-    parser.add_argument('--reacquire', type=reacquire.reacquire_artefacts,
+    parser.add_argument('--reacquire', type=arguments.reacquire,
                         help=('Either True or False.  In answer to the question - '
                               'Should the model artefacts be reacquired?'))
     args = parser.parse_args()
+
+    # Default reacquire?
+    reacquire = False if args.reacquire is None else args.reacquire
 
     # S3 S3Parameters, Service Instance
     connector = boto3.session.Session()
