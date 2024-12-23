@@ -70,7 +70,6 @@ if __name__ == '__main__':
                               'Should the model artefacts be reacquired?'))
     args = parser.parse_args()
 
-
     # S3 S3Parameters, Service Instance
     connector = boto3.session.Session()
     s3_parameters = src.s3.s3_parameters.S3Parameters(connector=connector).exc()
