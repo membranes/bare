@@ -58,9 +58,9 @@ class Setup:
         """
 
         # Probably
-        self.__directories.cleanup(path=self.__configurations.artefacts_)
+        self.__directories.cleanup(path=self.__configurations.data_)
 
-        return self.__directories.create(path=self.__configurations.artefacts_)
+        return self.__directories.create(path=self.__configurations.data_)
 
     def __local(self) -> bool:
         """
@@ -75,10 +75,13 @@ class Setup:
 
         return self.__directories.create(path=self.__configurations.warehouse)
 
-    def exc(self) -> bool:
+    def exc(self, reacquire: bool) -> bool:
         """
 
         :return:
         """
 
-        return self.__s3() & self.__local() & self.__data()
+        if reacquire:
+            return self.__s3() & self.__local() & self.__data()
+
+        return self.__s3() & self.__local()
