@@ -26,7 +26,8 @@ class Directives:
         """
 
         :param source_bucket: An Amazon S3 (Simple Storage Service)
-        :param origin: The prefix between the source bucket & one or more key names
+        :param origin: The prefix between the source bucket & one or more key names; starts and
+                       ends without a stroke, i.e., /.
         :param target: A local directory
         :return:
         """
@@ -45,9 +46,10 @@ class Directives:
     def unload(self, source_bucket: str, origin: str, target: str) -> int:
         """
 
-        :param source_bucket:
-        :param origin:
-        :param target:
+        :param source_bucket: An Amazon S3 (Simple Storage Service)
+        :param origin: The prefix between the source bucket & one or more key names; starts and
+                       ends without a stroke, i.e., /.
+        :param target: A local directory
         :return:
         """
 
