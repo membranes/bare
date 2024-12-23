@@ -1,7 +1,7 @@
 import logging
 import argparse
 
-class Reacquire:
+class Arguments:
     """
     Note<br>
     ------<br>
