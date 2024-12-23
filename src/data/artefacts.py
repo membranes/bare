@@ -6,7 +6,6 @@ import numpy as np
 import pandas as pd
 
 import config
-import src.elements.s3_parameters as s3p
 import src.elements.service as sr
 import src.s3.prefix
 
@@ -16,16 +15,13 @@ class Artefacts:
     The artefacts per architecture
     """
 
-    def __init__(self, service: sr.Service, s3_parameters: s3p.S3Parameters):
+    def __init__(self, service: sr.Service):
         """
 
         :param service: A suite of services for interacting with Amazon Web Services.
-        :param s3_parameters: The overarching S3 (Simple Storage Service) parameters
-                              settings of this project, e.g., region code name, buckets, etc.
         """
 
         self.__service = service
-        self.__s3_parameters = s3_parameters
 
         # Configurations
         self.__configurations = config.Config()
@@ -36,14 +32,14 @@ class Artefacts:
                             datefmt='%Y-%m-%d %H:%M:%S')
         self.__logger = logging.getLogger(__name__)
 
-    def __keys(self, prefix: str) -> list:
+    def __keys(self, source_bucket: str, prefix: str) -> list:
         """
 
         :return:
         """
 
         listings: list = src.s3.prefix.Prefix(
-            service=self.__service, bucket_name=self.__s3_parameters.internal).objects(prefix=prefix)
+            service=self.__service, bucket_name=source_bucket).objects(prefix=prefix)
 
         return listings
 
@@ -65,19 +61,19 @@ class Artefacts:
 
         return frame
 
-    def exc(self, architecture: str) -> pd.DataFrame:
+    def exc(self, source_bucket: str, prefix: str) -> pd.DataFrame:
         """
-        Determining the unique segments of fine-tuned models
+        Determining the unique segments of a prefix.  Remember, a prefix is the string between
+        a bucket name and a key name; start and end without a stroke, i.e., /
 
         :return:
         """
 
-        # The keys within the <artefacts> prefix
-        prefix = self.__s3_parameters.path_internal_artefacts + architecture + '/prime/model'
-        keys = self.__keys(prefix=prefix)
+        # The keys within the prefix
+        keys = self.__keys(source_bucket=source_bucket, prefix=prefix)
 
 
-        # Hence, the distinct model & metrics sources/paths
+        # Hence, the distinct paths
         sources = np.array([os.path.dirname(k) for k in keys])
         sources = np.unique(sources)
         self.__logger.info(sources)
