@@ -20,7 +20,7 @@ class Config:
         self.data_ = os.path.join(os.getcwd(), 'data')
         self.artefacts_ = os.path.join(self.data_, 'artefacts')
 
-        # Temporary; future argument.
+        # Temporary; future argument, or auto determination.
         self.device = 'cpu'
 
         # Amazon
