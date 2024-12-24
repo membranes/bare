@@ -15,7 +15,7 @@ class Illustration:
     def __init__(self, path: str):
         """
 
-        :param path:
+        :param path: The path to the underlying model's artefacts
         """
 
         self.__configurations = config.Config()
