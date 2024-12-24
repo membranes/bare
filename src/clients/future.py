@@ -26,12 +26,6 @@ class Future:
         # Pipeline
         self.__classifier = transformers.pipeline(task='ner', model=path, device=self.__configurations.device)
 
-        self.__css = ('.gradio-container-5-9-1 .prose table, .gradio-container-5-9-1 .prose tr, '
-                      '.gradio-container-5-9-1 .prose td, .gradio-container-5-9-1 .prose th '
-                      '{border:0 solid var(--body-text-color);}'
-                      '.paginate.svelte-p5q82i.svelte-p5q82i.svelte-p5q82i '
-                      '{justify-content:left; font-size:var(--text-md); margin-left: 10px;}')
-
     def __custom(self, paragraph):
         """
 
@@ -63,7 +57,7 @@ class Future:
         :return:
         """
 
-        with gradio.Blocks(css=self.__css) as demo:
+        with gradio.Blocks() as demo:
 
             gradio.Markdown(value=('<h1>Token Classification</h1><br><b>An illustrative interactive interface; the interface '
                                    'software allows for advanced interfaces.</b>'), line_breaks=True)
