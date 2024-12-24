@@ -61,7 +61,7 @@ class Future:
                     scores = gradio.JSON(label='scores')
                     compact = gradio.Textbox(label='compact')
 
-            gradio.ClearButton([paragraph, detections, scores])
+            gradio.ClearButton([paragraph, detections, scores, compact])
             detect.click(self.__custom, inputs=paragraph, outputs=[detections, scores, compact])
             gradio.Examples(examples=self.__configurations.examples, inputs=[paragraph], examples_per_page=1)
 
