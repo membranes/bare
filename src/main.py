@@ -32,7 +32,7 @@ def main():
     logger.info(paths)
 
     # Explore/Interact
-    src.clients.interface.Interface().exc(path=paths[0], client='future')
+    src.clients.interface.Interface().exc(path=paths[0], client='initial')
 
     # Delete Cache Points
     src.functions.cache.Cache().exc()
