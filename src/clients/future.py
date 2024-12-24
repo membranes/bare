@@ -42,7 +42,12 @@ class Future:
 
         return {'text': paragraph, 'entities': tokens}, summary, tokens
 
-    def __kill(self) -> str:
+    @staticmethod
+    def __kill() -> str:
+        """
+        
+        :return:
+        """
 
         logging.info('Terminating ...')
 
