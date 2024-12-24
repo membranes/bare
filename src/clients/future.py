@@ -23,8 +23,8 @@ class Future:
         # Pipeline
         self.__classifier = transformers.pipeline(task='ner', model=path, device=self.__configurations.device)
 
-        self.__css = ('.gradio-container-5-8-0 .prose table, .gradio-container-5-8-0 .prose tr, '
-                      '.gradio-container-5-8-0 .prose td, .gradio-container-5-8-0 .prose th '
+        self.__css = ('.gradio-container-5-9-1 .prose table, .gradio-container-5-9-1 .prose tr, '
+                      '.gradio-container-5-9-1 .prose td, .gradio-container-5-9-1 .prose th '
                       '{border:0 solid var(--body-text-color);}'
                       '.paginate.svelte-p5q82i.svelte-p5q82i.svelte-p5q82i '
                       '{justify-content:left; font-size:var(--text-md); margin-left: 10px;}')
