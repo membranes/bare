@@ -53,18 +53,6 @@ class Initial:
 
         return head
 
-
-    def __basic(self, paragraph):
-        """
-
-        :param paragraph:
-        :return:
-        """
-
-        tokens = self.__classifier(paragraph)
-
-        return {'text': paragraph, 'entities': tokens}
-
     def __custom(self, paragraph):
         """
 
