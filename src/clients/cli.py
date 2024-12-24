@@ -11,10 +11,14 @@ class CLI:
     Command Line Interface
     """
 
-    def __init__(self):
+    def __init__(self, path: str):
         """
-        Constructor
+
+        :param path: The path to the underlying model's artefacts
         """
+
+        # Pipeline
+        self.__classifier = transformers.pipeline(task='ner', model=path, device=config.Config().device)
 
         # Logging
         logging.basicConfig(level=logging.INFO,
@@ -22,7 +26,7 @@ class CLI:
                             datefmt='%Y-%m-%d %H:%M:%S')
         self.__logger = logging.getLogger(__name__)
 
-    def exc(self, path: str):
+    def exc(self, ):
         """
 
         :return:
@@ -30,10 +34,9 @@ class CLI:
 
         # Sample Text
         sentence = input('A sentence please: ')
+
+        # Re-print the input
         self.__logger.info('Sentence: %s', sentence)
 
-        # Pipeline
-        classifier = transformers.pipeline(task='ner', model=path, device=config.Config().device)
-
         # Hence
-        self.__logger.info(classifier(sentence))
+        self.__logger.info(self.__classifier(sentence))
