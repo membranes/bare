@@ -81,7 +81,7 @@ class Future:
                     stop = gradio.Button('Stop', variant='stop', visible=True, size='lg')
 
             detect.click(self.__custom, inputs=paragraph, outputs=[detections, scores, compact])
-            dependency = stop.click(fn=self.__kill)
+            stop.click(fn=self.__kill)
             gradio.Examples(examples=self.__configurations.examples, inputs=[paragraph], examples_per_page=1)
 
         demo.launch(server_port=7860)
