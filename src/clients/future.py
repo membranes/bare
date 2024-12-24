@@ -53,6 +53,7 @@ class Future:
 
     def exc(self):
         """
+        Upcoming: If Stop|Private, do not transfer inputs to Amazon S3 (Simple Storage Service)
 
         :return:
         """
@@ -66,7 +67,7 @@ class Future:
                 with gradio.Column(scale=3):
                     paragraph = gradio.Textbox(label='paragraph', placeholder="Enter sentence here...", max_length=2000)
                 with gradio.Column(scale=2):
-                    detections = gradio.HighlightedText(label='detections', interactive=True)
+                    detections = gradio.HighlightedText(label='detections', interactive=False)
                     scores = gradio.JSON(label='scores')
                     compact = gradio.Textbox(label='compact')
             with gradio.Row():
