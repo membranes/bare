@@ -1,4 +1,4 @@
-"""Module graphic.py"""
+"""Module initial.py"""
 import logging
 import transformers
 import gradio
@@ -6,7 +6,7 @@ import gradio
 import config
 
 
-class Graphic:
+class Initial:
     """
     Notes<br>
     -----<br>
