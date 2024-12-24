@@ -1,7 +1,8 @@
 """Module initial.py"""
 import logging
-import transformers
+
 import gradio
+import transformers
 
 import config
 
