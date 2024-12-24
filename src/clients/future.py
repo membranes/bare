@@ -1,9 +1,9 @@
 """Module future.py"""
 import logging
+import subprocess
 
 import gradio
 import transformers
-import subprocess
 
 import config
 import src.clients.persist
