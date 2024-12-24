@@ -1,5 +1,4 @@
 """Module initial.py"""
-import logging
 
 import gradio
 import transformers
@@ -20,14 +19,13 @@ class Initial:
     def __init__(self, path: str):
         """
 
-        :param path: The model's path
+        :param path: The path to the underlying model's artefacts
         """
 
         self.__configurations = config.Config()
 
         # Pipeline
         self.__classifier = transformers.pipeline(task='ner', model=path, device=self.__configurations.device)
-        logging.info(self.__classifier)
 
     @staticmethod
     def __table(tokens) -> str:
