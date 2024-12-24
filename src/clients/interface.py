@@ -1,9 +1,10 @@
 """Module interface.py"""
 import logging
 
+import src.clients.basic
 import src.clients.cli
+import src.clients.future
 import src.clients.initial
-
 
 
 class Interface:
@@ -22,17 +23,24 @@ class Interface:
                             datefmt='%Y-%m-%d %H:%M:%S')
         self.__logger = logging.getLogger(__name__)
 
-    def exc(self, path: str, cli: bool = False):
+    def exc(self, path: str, client: str):
         """
 
         :param path: The model's path
-        :param cli: Explore via command line interface?
+        :param client: Explore via command line interface?
         :return:
         """
 
-        if cli:
-            self.__logger.info('Via CLI: ')
-            src.clients.cli.CLI().exc(path=path)
+        self.__logger.info('Via CLI: ')
 
-        self.__logger.info('Via Interface: ')
-        src.clients.initial.Initial(path=path).exc()
+        match client:
+            case 'basic':
+                src.clients.basic.Basic(path=path).exc()
+            case 'cli':
+                src.clients.cli.CLI(path=path).exc()
+            case 'future':
+                src.clients.future.Future(path=path).exc()
+            case 'initial':
+                src.clients.initial.Initial(path=path).exc()
+            case _:
+                raise 'Unknown'
