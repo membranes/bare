@@ -66,12 +66,14 @@ class Initial:
 
     def exc(self):
         """
+        Despite the flagging mode message, 'auto' is a correct option and works as described;
+        <a href="https://www.gradio.app/docs/gradio/interface" target="_blank">gradio.Interface()</a>.<br>
 
         :return:
         """
 
-        css = ('.gradio-container-5-8-0 .prose table, .gradio-container-5-8-0 .prose tr, '
-               '.gradio-container-5-8-0 .prose td, .gradio-container-5-8-0 .prose th '
+        css = ('.gradio-container-5-9-1 .prose table, .gradio-container-5-9-1 .prose tr, '
+               '.gradio-container-5-9-1 .prose td, .gradio-container-5-9-1 .prose th '
                '{border:0 solid var(--body-text-color);}'
                '.paginate.svelte-p5q82i.svelte-p5q82i.svelte-p5q82i '
                '{justify-content:left; font-size:var(--text-md); margin-left: 10px;}')
@@ -83,6 +85,8 @@ class Initial:
                                 title='Token Classification',
                                 description=('<b>An illustrative interactive interface; the interface '
                                             'software allows for advanced interfaces.</b>'),
-                                css=css)
+                                css=css,
+                                flagging_mode='auto',
+                                stop_btn=gradio.Button('Stop', variant='stop', visible=True, interactive=True))
 
         demo.launch()
