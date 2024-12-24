@@ -37,10 +37,9 @@ class Future:
         """
 
         tokens = self.__classifier(paragraph)
-        logging.info(tokens)
         summary = {token['word']: [token['entity'], token['score']] for token in tokens}
 
-        return {'text': paragraph, 'entities': tokens}, summary
+        return {'text': paragraph, 'entities': tokens}, summary, tokens
 
     def exc(self):
         """
@@ -60,9 +59,10 @@ class Future:
                 with gradio.Column():
                     detections = gradio.HighlightedText(label='detections', interactive=True)
                     scores = gradio.JSON(label='scores')
+                    compact = gradio.Textbox(label='compact')
 
             gradio.ClearButton([paragraph, detections, scores])
-            detect.click(self.__custom, inputs=paragraph, outputs=[detections, scores])
+            detect.click(self.__custom, inputs=paragraph, outputs=[detections, scores, compact])
             gradio.Examples(examples=self.__configurations.examples, inputs=[paragraph], examples_per_page=1)
 
         demo.launch()
