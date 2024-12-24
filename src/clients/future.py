@@ -7,7 +7,7 @@ import transformers
 import config
 
 
-class Illustration:
+class Future:
     """
     A set-up that allows for custom interface options.
     """
