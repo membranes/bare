@@ -1,15 +1,20 @@
+"""Module future.py"""
 import logging
-import transformers
+
 import gradio
+import transformers
 
 import config
 
 
 class Illustration:
+    """
+    A set-up that allows for custom interface options.
+    """
 
     def __init__(self, path: str):
         """
-        
+
         :param path:
         """
 
