@@ -2,7 +2,7 @@
 import logging
 
 import src.clients.cli
-import src.clients.graphic
+import src.clients.initial
 
 
 
@@ -35,4 +35,4 @@ class Interface:
             src.clients.cli.CLI().exc(path=path)
 
         self.__logger.info('Via Interface: ')
-        src.clients.graphic.Graphic(path=path).exc(basic=False)
+        src.clients.initial.Initial(path=path).exc(basic=False)
