@@ -1,5 +1,6 @@
 """Module interface.py"""
 import logging
+import typing
 
 import src.clients.basic
 import src.clients.cli
@@ -23,15 +24,15 @@ class Interface:
                             datefmt='%Y-%m-%d %H:%M:%S')
         self.__logger = logging.getLogger(__name__)
 
-    def exc(self, path: str, client: str):
+    def exc(self, path: str, client: typing.Literal['basic', 'cli', 'future', 'initial'] = 'initial'):
         """
 
         :param path: The model's path
-        :param client: Explore via command line interface?
+        :param client: A client via which to interact with the model.
         :return:
         """
 
-        self.__logger.info('Via CLI: ')
+        self.__logger.info('Trying: %s', client)
 
         match client:
             case 'basic':
