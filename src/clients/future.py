@@ -3,6 +3,7 @@ import logging
 
 import gradio
 import transformers
+import subprocess
 
 import config
 
@@ -41,6 +42,12 @@ class Future:
 
         return {'text': paragraph, 'entities': tokens}, summary, tokens
 
+    def __kill(self) -> str:
+
+        logging.info('Terminating ...')
+
+        return subprocess.check_output('kill -9 $(lsof -t -i:7860)', shell=True, text=True)
+
     def exc(self):
         """
 
@@ -53,21 +60,24 @@ class Future:
                                    'software allows for advanced interfaces.</b>'), line_breaks=True)
 
             with gradio.Row():
-                with gradio.Column():
+                with gradio.Column(scale=2):
                     paragraph = gradio.Textbox(label='paragraph', placeholder="Enter sentence here...")
-                with gradio.Column():
+                with gradio.Column(scale=1):
                     detections = gradio.HighlightedText(label='detections', interactive=True)
                     scores = gradio.JSON(label='scores')
                     compact = gradio.Textbox(label='compact')
-
             with gradio.Row():
-                with gradio.Column():
-                    gradio.ClearButton([paragraph, detections, scores, compact])
+                with gradio.Column(scale=1):
                     detect = gradio.Button(value='Submit')
-                with gradio.Column():
-                    gradio.Button('Stop', variant='stop', visible=True, size='lg', interactive=True)
+                with gradio.Column(scale=1):
+                    gradio.ClearButton([paragraph, detections, scores, compact])
+                with gradio.Column(scale=1):
+                    stop = gradio.Button('Stop', variant='stop', visible=True, size='sm')
 
             detect.click(self.__custom, inputs=paragraph, outputs=[detections, scores, compact])
+            dependency = stop.click(fn=self.__kill)
             gradio.Examples(examples=self.__configurations.examples, inputs=[paragraph], examples_per_page=1)
 
-        demo.launch()
+        demo.launch(server_port=7860)
+
+        logging.info('Dependency: %s', dependency)
