@@ -42,26 +42,6 @@ class Future:
 
         return {'text': paragraph, 'entities': tokens}, summary
 
-    @staticmethod
-    def __selection():
-        """
-        Notes<br>
-        -------<br>
-
-        <b>Objective</b>: The wherewithal to click on a highlighted text and correct its tag assignment if it
-        is incorrect.  Subsequently, the corrected piece is saved in alongside the original results; opt
-        for a smart saving option.<br><br>
-
-        def onselect(event: gradio.SelectData): return event.index.<br>
-        .select(onselect, inputs=None, outputs=options)<br><br>
-
-        :return:
-        """
-
-        gradio.Dropdown(
-            ['O', 'B-GEO', 'B-GPE', 'B-TIM', 'B-ORG', 'I-GEO', 'B-PER', 'I-PER', 'I-ORG', 'I-TIM', 'I-GPE'],
-            interactive=True, label='tags')
-
     def exc(self):
         """
 
