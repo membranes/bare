@@ -41,8 +41,8 @@ jobs:
           echo "Issues in relation to logic (F7), syntax (Python E9, Flake F7), mathematical
           formulae symbols (F63), undefined variable names (F82):"
           
-          printf "\n src/algorithms "
-          flake8 --count --select=E9,F63,F7,F82 --show-source --statistics src/algorithms
+          printf "\n src/clients "
+          flake8 --count --select=E9,F63,F7,F82 --show-source --statistics src/clients
           
           printf "\n src/data "
           flake8 --count --select=E9,F63,F7,F82 --show-source --statistics src/data
@@ -61,8 +61,8 @@ jobs:
           printf "\n\n"
           echo "Complexity issues:"
           
-          printf "\n src/algorithms "
-          flake8 --count --exit-zero --max-complexity=10 --max-line-length=127 --statistics src/algorithms
+          printf "\n src/clients "
+          flake8 --count --exit-zero --max-complexity=10 --max-line-length=127 --statistics src/clients
           
           printf "\n src/data "
           flake8 --count --exit-zero --max-complexity=10 --max-line-length=127 --statistics src/data
@@ -82,8 +82,8 @@ jobs:
           printf "\n"
           echo "============================= pylint session starts =============================="
           
-          printf "\n Package src/algorithms"
-          pylint --rcfile .pylintrc src/algorithms
+          printf "\n Package src/clients"
+          pylint --rcfile .pylintrc src/clients
           
           printf "\n Package src/data"
           pylint --rcfile .pylintrc src/data
