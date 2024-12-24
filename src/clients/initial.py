@@ -62,8 +62,9 @@ class Initial:
         table = self.__table(tokens=tokens)
         summary = {token['word']: [token['entity'], token['score']] for token in tokens}
 
-        return {'text': paragraph, 'entities': tokens}, table, summary
+        return {'text': paragraph, 'entities': tokens}, table, summary, tokens
 
+    # noinspection PyTypeChecker
     def exc(self):
         """
         Despite the flagging mode message, 'auto' is a correct option and works as described;
@@ -78,15 +79,16 @@ class Initial:
                '.paginate.svelte-p5q82i.svelte-p5q82i.svelte-p5q82i '
                '{justify-content:left; font-size:var(--text-md); margin-left: 10px;}')
 
-        demo = gradio.Interface(self.__custom,
-                                gradio.Textbox(placeholder="Enter sentence here..."),
-                                [gradio.HighlightedText(interactive=False), 'html', 'json'],
-                                examples=self.__configurations.examples, examples_per_page=1,
-                                title='Token Classification',
-                                description=('<b>An illustrative interactive interface; the interface '
-                                            'software allows for advanced interfaces.</b>'),
-                                css=css,
-                                flagging_mode='auto',
-                                stop_btn=gradio.Button('Stop', variant='stop', visible=True, interactive=True))
+        demo = gradio.Interface(
+            self.__custom,
+            inputs=gradio.Textbox(placeholder="Enter sentence here...", max_length=2000),
+            outputs=[gradio.HighlightedText(interactive=False), 'html', 'json', gradio.Textbox()],
+            examples=self.__configurations.examples, examples_per_page=1,
+            title='Token Classification',
+            description=('<b>An illustrative interactive interface; the interface '
+                         'software allows for advanced interfaces.</b>'),
+            flagging_mode='auto',
+            css=css,
+            stop_btn=gradio.Button('Stop', variant='stop', visible=True, interactive=False))
 
         demo.launch()
