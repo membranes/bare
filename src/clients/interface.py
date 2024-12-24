@@ -44,4 +44,4 @@ class Interface:
             case 'initial':
                 src.clients.initial.Initial(path=path).exc()
             case _:
-                raise 'Unknown'
+                return 'Unknown'
