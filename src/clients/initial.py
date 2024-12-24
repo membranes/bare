@@ -1,7 +1,8 @@
 """Module initial.py"""
-
+import logging
 import gradio
 import transformers
+import subprocess
 
 import config
 
@@ -56,7 +57,5 @@ class Initial:
             title='Token Classification',
             description=('<b>An illustrative interactive interface; the interface '
                          'software allows for advanced interfaces.</b>'),
-            flagging_mode='auto',
-            stop_btn=gradio.Button('Stop', variant='stop', visible=True, size='lg', interactive=True))
-
-        demo.launch()
+            flagging_mode='auto')
+        demo.launch(server_port=7860)
