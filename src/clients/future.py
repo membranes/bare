@@ -45,7 +45,7 @@ class Future:
     @staticmethod
     def __kill() -> str:
         """
-        
+
         :return:
         """
 
@@ -85,5 +85,3 @@ class Future:
             gradio.Examples(examples=self.__configurations.examples, inputs=[paragraph], examples_per_page=1)
 
         demo.launch(server_port=7860)
-
-        logging.info('Dependency: %s', dependency)
