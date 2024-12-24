@@ -78,10 +78,9 @@ class Initial:
 
         return {'text': paragraph, 'entities': tokens}, table, summary
 
-    def exc(self, basic: bool = True):
+    def exc(self):
         """
 
-        :param basic: Basic interface?
         :return:
         """
 
@@ -91,19 +90,13 @@ class Initial:
                '.paginate.svelte-p5q82i.svelte-p5q82i.svelte-p5q82i '
                '{justify-content:left; font-size:var(--text-md); margin-left: 10px;}')
 
-        if basic:
-            demo = gradio.Interface(self.__basic,
-                                    gradio.Textbox(placeholder="Enter sentence here..."),
-                                    gradio.HighlightedText(),
-                                    examples=self.__configurations.examples)
-        else:
-            demo = gradio.Interface(self.__custom,
-                                    gradio.Textbox(placeholder="Enter sentence here..."),
-                                    [gradio.HighlightedText(interactive=False), 'html', 'json'],
-                                    examples=self.__configurations.examples, examples_per_page=1,
-                                    title='Token Classification',
-                                    description=('<b>An illustrative interactive interface; the interface '
-                                                'software allows for advanced interfaces.</b>'),
-                                    css=css)
+        demo = gradio.Interface(self.__custom,
+                                gradio.Textbox(placeholder="Enter sentence here..."),
+                                [gradio.HighlightedText(interactive=False), 'html', 'json'],
+                                examples=self.__configurations.examples, examples_per_page=1,
+                                title='Token Classification',
+                                description=('<b>An illustrative interactive interface; the interface '
+                                            'software allows for advanced interfaces.</b>'),
+                                css=css)
 
         demo.launch()
