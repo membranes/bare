@@ -32,7 +32,7 @@ def main():
     logger.info(paths)
 
     # Explore/Interact
-    src.algorithms.interface.Interface().exc(path=paths[0])
+    src.clients.interface.Interface().exc(path=paths[0])
 
     # Delete Cache Points
     src.functions.cache.Cache().exc()
@@ -56,7 +56,7 @@ if __name__ == '__main__':
     os.environ['HF_HOME']='/tmp'
 
     # Classes
-    import src.algorithms.interface
+    import src.clients.interface
     import src.data.interface
     import src.data.arguments
     import src.functions.service
