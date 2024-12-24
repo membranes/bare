@@ -1,8 +1,8 @@
 """Module interface.py"""
 import logging
 
-import src.algorithms.cli
-import src.algorithms.graphic
+import src.clients.cli
+import src.clients.graphic
 
 
 
@@ -32,7 +32,7 @@ class Interface:
 
         if cli:
             self.__logger.info('Via CLI: ')
-            src.algorithms.cli.CLI().exc(path=path)
+            src.clients.cli.CLI().exc(path=path)
 
         self.__logger.info('Via Interface: ')
-        src.algorithms.graphic.Graphic(path=path).exc(basic=False)
+        src.clients.graphic.Graphic(path=path).exc(basic=False)
