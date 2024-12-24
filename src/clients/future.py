@@ -60,19 +60,20 @@ class Future:
                                    'software allows for advanced interfaces.</b>'), line_breaks=True)
 
             with gradio.Row():
+                with gradio.Column(scale=3):
+                    with gradio.Row():
+                        paragraph = gradio.Textbox(label='paragraph', placeholder="Enter sentence here...")
                 with gradio.Column(scale=2):
-                    paragraph = gradio.Textbox(label='paragraph', placeholder="Enter sentence here...")
-                with gradio.Column(scale=1):
-                    detections = gradio.HighlightedText(label='detections', interactive=True)
-                    scores = gradio.JSON(label='scores')
-                    compact = gradio.Textbox(label='compact')
+                    with gradio.Row():
+                        with gradio.Column():
+                            detections = gradio.HighlightedText(label='detections', interactive=True)
+                            scores = gradio.JSON(label='scores')
+                            compact = gradio.Textbox(label='compact')
             with gradio.Row():
-                with gradio.Column(scale=1):
+                with gradio.Row():
                     detect = gradio.Button(value='Submit')
-                with gradio.Column(scale=1):
                     gradio.ClearButton([paragraph, detections, scores, compact])
-                with gradio.Column(scale=1):
-                    stop = gradio.Button('Stop', variant='stop', visible=True, size='sm')
+                    stop = gradio.Button('Stop', variant='stop', visible=True, size='lg')
 
             detect.click(self.__custom, inputs=paragraph, outputs=[detections, scores, compact])
             dependency = stop.click(fn=self.__kill)
