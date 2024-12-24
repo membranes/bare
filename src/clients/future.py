@@ -64,19 +64,15 @@ class Future:
 
             with gradio.Row():
                 with gradio.Column(scale=3):
-                    with gradio.Row():
-                        paragraph = gradio.Textbox(label='paragraph', placeholder="Enter sentence here...", max_length=2000)
+                    paragraph = gradio.Textbox(label='paragraph', placeholder="Enter sentence here...", max_length=2000)
                 with gradio.Column(scale=2):
-                    with gradio.Row():
-                        with gradio.Column():
-                            detections = gradio.HighlightedText(label='detections', interactive=True)
-                            scores = gradio.JSON(label='scores')
-                            compact = gradio.Textbox(label='compact')
+                    detections = gradio.HighlightedText(label='detections', interactive=True)
+                    scores = gradio.JSON(label='scores')
+                    compact = gradio.Textbox(label='compact')
             with gradio.Row():
-                with gradio.Row():
-                    detect = gradio.Button(value='Submit')
-                    gradio.ClearButton([paragraph, detections, scores, compact])
-                    stop = gradio.Button('Stop', variant='stop', visible=True, size='lg')
+                detect = gradio.Button(value='Submit')
+                gradio.ClearButton([paragraph, detections, scores, compact])
+                stop = gradio.Button('Stop', variant='stop', visible=True, size='lg')
 
             detect.click(self.__custom, inputs=paragraph, outputs=[detections, scores, compact])
             stop.click(fn=self.__kill)
