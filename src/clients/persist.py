@@ -36,4 +36,4 @@ class Persist:
         data = pd.DataFrame.from_records(data=tokens)
         data.sort_values(by='index', inplace=True)
         data.info()
-        data.head()
+        self.__logger.info(data.head(n=33))
