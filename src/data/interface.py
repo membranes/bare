@@ -2,7 +2,6 @@
 import logging
 
 import config
-import src.data.artefacts
 import src.elements.s3_parameters as s3p
 import src.elements.service as sr
 import src.s3.directives
