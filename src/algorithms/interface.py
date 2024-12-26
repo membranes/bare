@@ -8,6 +8,9 @@ import src.settings.arguments
 
 
 class Interface:
+    """
+    Executes the functions that process the input text, and the tokens classifications results.
+    """
 
     def __init__(self, path: str):
         """
@@ -26,6 +29,11 @@ class Interface:
         self.__logger = logging.getLogger(__name__)
 
     def __structuring(self):
+        """
+        In Progress
+
+        :return:
+        """
 
         match self.__architecture:
             case 'distil':
@@ -49,4 +57,5 @@ class Interface:
         self.__logger.info('summary: %s\n%s', type(summary), summary)
         self.__logger.info('tokens: %s\n%s', type(tokens), tokens)
 
+        self.__structuring()
         src.algorithms.persist.Persist().exc(paragraph=paragraph, tokens=tokens)
