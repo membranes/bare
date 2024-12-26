@@ -1,31 +1,23 @@
 """Module interface.py"""
 import logging
 import os
-import glob
 
-import config
 import src.algorithms.persist
 import src.functions.objects
 import src.settings.arguments
-import src.elements.s3_parameters as s3p
 
 
 class Interface:
 
-    def __init__(self, path: str, s3_parameters: s3p.S3Parameters):
+    def __init__(self, path: str):
         """
 
-        :param path:
-        :param s3_parameters:
+        :param path: The path to the underlying model's artefacts
         """
 
-        uri = os.path.join(os.path.dirname(path), 'architecture.json')
         objects = src.functions.objects.Objects()
-        self.__architecture = objects.read(uri=uri)['name']
-
-        # Arguments
-        self.__arguments = src.settings.arguments.Arguments(
-            s3_parameters=s3_parameters).exc(architecture=self.__architecture)
+        self.__architecture = objects.read(uri=os.path.join(os.path.dirname(path), 'architecture.json'))['name']
+        self.__config = objects.read(uri=os.path.join(path, 'config.json'))
 
         # Logging
         logging.basicConfig(level=logging.INFO,
@@ -33,6 +25,13 @@ class Interface:
                             datefmt='%Y-%m-%d %H:%M:%S')
         self.__logger = logging.getLogger(__name__)
 
+    def __structuring(self):
+
+        match self.__architecture:
+            case 'distil':
+                self.__logger.info('proceed')
+            case _:
+                self.__logger.info('Unknown')
 
     def exc(self, paragraph, summary, tokens):
         """
@@ -44,7 +43,7 @@ class Interface:
         """
 
         self.__logger.info(self.__architecture)
-        self.__logger.info(self.__arguments)
+        self.__logger.info(self.__config)
 
         self.__logger.info('paragraph: %s\n%s', type(paragraph), paragraph)
         self.__logger.info('summary: %s\n%s', type(summary), summary)
