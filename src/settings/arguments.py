@@ -31,7 +31,7 @@ class Arguments:
         :return:
         """
 
-        path = 's3://' + self.__s3_parameters.configurations + f'/{architecture}/' + 'arguments.json'
+        path = 's3://' + self.__s3_parameters.configurations + f'/architecture/{architecture}/' + 'arguments.json'
 
         try:
             values = pd.read_json(path_or_buf=path, orient='index')
