@@ -3,7 +3,6 @@ import logging
 
 import config
 import src.elements.s3_parameters as s3p
-import src.elements.service as sr
 import src.s3.directives
 import src.s3.unload
 
@@ -17,15 +16,13 @@ class Interface:
     will be unnecessary, edit accordingly.</b>
     """
 
-    def __init__(self, service: sr.Service, s3_parameters: s3p.S3Parameters):
+    def __init__(self, s3_parameters: s3p.S3Parameters):
         """
 
-        :param service: A suite of services for interacting with Amazon Web Services.
         :param s3_parameters: The overarching S3 (Simple Storage Service) parameters
                               settings of this project, e.g., region code name, buckets, etc.
         """
 
-        self.__service: sr.Service = service
         self.__s3_parameters: s3p.S3Parameters = s3_parameters
         self.__source_bucket = self.__s3_parameters.external
 
@@ -51,7 +48,10 @@ class Interface:
         """
 
         try:
-            state = self.__get_assets(source_bucket=self.__source_bucket, origin='warehouse/numerics/best', target=config.Config().data_)
+            state = self.__get_assets(
+                source_bucket=self.__source_bucket,
+                origin='warehouse/numerics/best',
+                target=config.Config().data_)
         except RuntimeError as err:
             raise err from err
 
