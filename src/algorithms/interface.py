@@ -47,15 +47,16 @@ class Interface:
             case _:
                 self.__logger.info('Unknown')
 
-    def exc(self, paragraph, summary, tokens):
+    def exc(self, paragraphs: str, tokens: list):
         """
 
-        :param paragraph:
-        :param summary:
+        :param paragraphs:
         :param tokens:
         :return:
         """
 
+        splits = paragraphs.splitlines()
+        self.__logger.info(splits)
 
 
         data = pd.DataFrame.from_records(data=tokens)
