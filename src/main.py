@@ -1,9 +1,9 @@
 """Module main.py"""
 import argparse
+import glob
 import logging
 import os
 import sys
-import glob
 
 import boto3
 
@@ -24,6 +24,7 @@ def main():
         sys.exit('No Executions')
 
     # ...
+    logger.info('Re-acquire: %s', reacquire)
     if reacquire:
         src.data.interface.Interface(service=service, s3_parameters=s3_parameters).exc()
 
@@ -31,7 +32,7 @@ def main():
     path = glob.glob(os.path.join(root, 'data', '**', 'model'), recursive=True)[0]
 
     # Explore/Interact
-    src.clients.interface.Interface(s3_parameters=s3_parameters).exc(path=path, client='future')
+    src.clients.interface.Interface().exc(path=path, client='future')
 
     # Delete Cache Points
     src.functions.cache.Cache().exc()
