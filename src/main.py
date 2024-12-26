@@ -58,16 +58,16 @@ if __name__ == '__main__':
     # Classes
     import src.clients.interface
     import src.data.interface
-    import src.data.arguments
+    import src.variables
     import src.functions.service
     import src.functions.cache
     import src.s3.s3_parameters
     import src.setup
 
-    # Arguments
-    arguments = src.data.arguments.Arguments()
+    # The arguments, i.e., input variables.
+    variables = src.variables.Variables()
     parser = argparse.ArgumentParser()
-    parser.add_argument('--reacquire', type=arguments.reacquire,
+    parser.add_argument('--reacquire', type=variables.reacquire,
                         help=('Either True or False.  In answer to the question - '
                               'Should the model artefacts be reacquired?'))
     args = parser.parse_args()
