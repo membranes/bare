@@ -14,7 +14,8 @@ class Persist:
         Constructor
         """
 
-    def exc(self, paragraph: str, tokens: list):
+    @staticmethod
+    def exc(paragraph: str, tokens: list):
         """
 
         :param paragraph: The input text
