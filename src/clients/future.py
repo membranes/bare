@@ -26,19 +26,19 @@ class Future:
         # Pipeline
         self.__classifier = transformers.pipeline(task='ner', model=path, device=self.__configurations.device)
 
-    def __custom(self, paragraph):
+    def __custom(self, paragraphs):
         """
 
         :param paragraph:
         :return:
         """
 
-        tokens = self.__classifier(paragraph)
+        tokens = self.__classifier(paragraphs)
         summary = {token['word']: [token['entity'], token['score']] for token in tokens}
 
-        self.__algorithms.exc(paragraph=paragraph, summary=summary, tokens=tokens)
+        self.__algorithms.exc(paragraphs=paragraphs, tokens=tokens)
 
-        return {'text': paragraph, 'entities': tokens}, summary, tokens
+        return {'text': paragraphs, 'entities': tokens}, summary, tokens
 
     @staticmethod
     def __kill() -> str:
@@ -65,18 +65,18 @@ class Future:
 
             with gradio.Row():
                 with gradio.Column(scale=3):
-                    paragraph = gradio.Textbox(label='paragraph', placeholder="Enter sentence here...", max_length=2000)
+                    paragraphs = gradio.Textbox(label='paragraphs', placeholder="Enter sentence here...", max_length=2000)
                 with gradio.Column(scale=2):
                     detections = gradio.HighlightedText(label='detections', interactive=False)
                     scores = gradio.JSON(label='scores')
                     compact = gradio.Textbox(label='compact')
             with gradio.Row():
                 detect = gradio.Button(value='Submit')
-                gradio.ClearButton([paragraph, detections, scores, compact])
+                gradio.ClearButton([paragraphs, detections, scores, compact])
                 stop = gradio.Button('Stop', variant='stop', visible=True, size='lg')
 
-            detect.click(self.__custom, inputs=paragraph, outputs=[detections, scores, compact])
+            detect.click(self.__custom, inputs=paragraphs, outputs=[detections, scores, compact])
             stop.click(fn=self.__kill)
-            gradio.Examples(examples=self.__configurations.examples, inputs=[paragraph], examples_per_page=1)
+            gradio.Examples(examples=self.__configurations.examples, inputs=[paragraphs], examples_per_page=1)
 
         demo.launch(server_port=7860)
