@@ -28,11 +28,10 @@ def main():
         src.data.interface.Interface(service=service, s3_parameters=s3_parameters).exc()
 
     # ...
-    paths = glob.glob(os.path.join(root, 'data', '**', 'model'), recursive=True)
-    logger.info(paths)
+    path = glob.glob(os.path.join(root, 'data', '**', 'model'), recursive=True)[0]
 
     # Explore/Interact
-    src.clients.interface.Interface().exc(path=paths[0], client='future')
+    src.clients.interface.Interface().exc(path=path, client='future')
 
     # Delete Cache Points
     src.functions.cache.Cache().exc()
