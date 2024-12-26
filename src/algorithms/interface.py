@@ -2,7 +2,8 @@
 import logging
 import os
 
-import src.algorithms.persist
+import pandas as pd
+
 import src.functions.objects
 import src.settings.arguments
 
@@ -18,15 +19,20 @@ class Interface:
         :param path: The path to the underlying model's artefacts
         """
 
-        objects = src.functions.objects.Objects()
-        self.__architecture = objects.read(uri=os.path.join(os.path.dirname(path), 'architecture.json'))['name']
-        self.__config = objects.read(uri=os.path.join(path, 'config.json'))
-
         # Logging
         logging.basicConfig(level=logging.INFO,
                             format='\n\n%(message)s\n%(asctime)s.%(msecs)03d',
                             datefmt='%Y-%m-%d %H:%M:%S')
         self.__logger = logging.getLogger(__name__)
+
+        # Objects
+        objects = src.functions.objects.Objects()
+
+        self.__architecture = objects.read(uri=os.path.join(os.path.dirname(path), 'architecture.json'))['name']
+        self.__logger.info(self.__architecture)
+
+        self.__config = objects.read(uri=os.path.join(path, 'config.json'))
+        self.__logger.info(self.__config)
 
     def __structuring(self):
         """
@@ -50,12 +56,11 @@ class Interface:
         :return:
         """
 
-        self.__logger.info(self.__architecture)
-        self.__logger.info(self.__config)
 
-        self.__logger.info('paragraph: %s\n%s', type(paragraph), paragraph)
-        self.__logger.info('summary: %s\n%s', type(summary), summary)
-        self.__logger.info('tokens: %s\n%s', type(tokens), tokens)
+
+        data = pd.DataFrame.from_records(data=tokens)
+        data.sort_values(by='index', inplace=True)
+        data.info()
 
         self.__structuring()
-        src.algorithms.persist.Persist().exc(paragraph=paragraph, tokens=tokens)
+
