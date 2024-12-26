@@ -31,7 +31,7 @@ def main():
     path = glob.glob(os.path.join(root, 'data', '**', 'model'), recursive=True)[0]
 
     # Explore/Interact
-    src.clients.interface.Interface().exc(path=path, client='future')
+    src.clients.interface.Interface(s3_parameters=s3_parameters).exc(path=path, client='future')
 
     # Delete Cache Points
     src.functions.cache.Cache().exc()
