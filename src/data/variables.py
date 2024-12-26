@@ -1,8 +1,8 @@
-"""Module arguments.py"""
+"""Module variables.py"""
 import logging
 import argparse
 
-class Arguments:
+class Variables:
     """
     Note<br>
     ------<br>
