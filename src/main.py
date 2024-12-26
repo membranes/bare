@@ -26,7 +26,7 @@ def main():
     # ...
     logger.info('Re-acquire: %s', reacquire)
     if reacquire:
-        src.data.interface.Interface(service=service, s3_parameters=s3_parameters).exc()
+        src.data.interface.Interface(s3_parameters=s3_parameters).exc()
 
     # ...
     path = glob.glob(os.path.join(root, 'data', '**', 'model'), recursive=True)[0]
