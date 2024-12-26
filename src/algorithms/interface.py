@@ -55,13 +55,16 @@ class Interface:
         :return:
         """
 
-        splits = paragraphs.splitlines()
-        self.__logger.info(splits)
+        sentences = paragraphs.splitlines()
+        frame = pd.DataFrame(data={'sentence': sentences})
+        self.__logger.info(sentences)
+        self.__logger.info(frame)
 
 
         data = pd.DataFrame.from_records(data=tokens)
         data.sort_values(by='index', inplace=True)
         data.info()
+        self.__logger.info(data)
 
         self.__structuring()
 
