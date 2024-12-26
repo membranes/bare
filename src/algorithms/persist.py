@@ -1,7 +1,11 @@
 """Module persist.py"""
-import logging
+import os
+import time
 
-import pandas as pd
+import datasets
+
+import config
+import src.functions.directories
 
 
 class Persist:
@@ -14,18 +18,23 @@ class Persist:
         Constructor
         """
 
-    @staticmethod
-    def exc(paragraph: str, tokens: list):
+        self.__configurations = config.Config()
+
+        self.__directories = src.functions.directories.Directories()
+
+    def exc(self, blob: datasets.Dataset):
         """
 
-        :param paragraph: The input text
-        :param tokens:
+        :param blob:
         :return:
         """
 
-        logging.info(paragraph)
+        # A path name via current time
+        segment: int = int(time.time())
+        path = os.path.join(self.__configurations.warehouse, f'{segment}')
 
-        data = pd.DataFrame.from_records(data=tokens)
-        data.sort_values(by='index', inplace=True)
-        data.info()
-        logging.info(data.head(n=33))
+        # Create the path
+        self.__directories.create(path=path)
+
+        # Save
+        blob.save_to_disk(dataset_path=path)
