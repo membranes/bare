@@ -29,7 +29,7 @@ class Future:
     def __custom(self, paragraphs):
         """
 
-        :param paragraph:
+        :param paragraphs:
         :return:
         """
 
