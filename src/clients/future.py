@@ -6,7 +6,7 @@ import gradio
 import transformers
 
 import config
-import src.clients.persist
+import src.algorithms.interface
 
 
 class Future:
@@ -21,7 +21,7 @@ class Future:
         """
 
         self.__configurations = config.Config()
-        self.__persist = src.clients.persist.Persist()
+        self.__algorithms = src.algorithms.interface.Interface()
 
         # Pipeline
         self.__classifier = transformers.pipeline(task='ner', model=path, device=self.__configurations.device)
@@ -36,7 +36,7 @@ class Future:
         tokens = self.__classifier(paragraph)
         summary = {token['word']: [token['entity'], token['score']] for token in tokens}
 
-        self.__persist.exc(paragraph=paragraph, summary=summary, tokens=tokens)
+        self.__algorithms.exc(paragraph=paragraph, summary=summary, tokens=tokens)
 
         return {'text': paragraph, 'entities': tokens}, summary, tokens
 
