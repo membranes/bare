@@ -7,7 +7,6 @@ import transformers
 
 import config
 import src.algorithms.interface
-import src.elements.s3_parameters as s3p
 
 
 class Future:
@@ -15,14 +14,14 @@ class Future:
     A set-up that allows for custom interface options.
     """
 
-    def __init__(self, path: str, s3_parameters: s3p.S3Parameters):
+    def __init__(self, path: str):
         """
 
         :param path: The path to the underlying model's artefacts
         """
 
         self.__configurations = config.Config()
-        self.__algorithms = src.algorithms.interface.Interface(path=path, s3_parameters=s3_parameters)
+        self.__algorithms = src.algorithms.interface.Interface(path=path)
 
         # Pipeline
         self.__classifier = transformers.pipeline(task='ner', model=path, device=self.__configurations.device)
