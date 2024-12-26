@@ -1,8 +1,7 @@
 """Module interface.py"""
-import sys
+import logging
 
-import dask
-
+import config
 import src.data.artefacts
 import src.elements.s3_parameters as s3p
 import src.elements.service as sr
@@ -34,7 +33,6 @@ class Interface:
         # Directives
         self.__directives = src.s3.directives.Directives()
 
-    @dask.delayed
     def __get_assets(self, source_bucket: str, origin: str, target: str):
         """
 
@@ -53,19 +51,9 @@ class Interface:
         :return:
         """
 
-        # Get the artefacts metadata; the prefix is the string between
-        # a bucket name and one or more key names, herein it starts and ends without a stroke, i.e., /.
-        strings = src.data.artefacts.Artefacts(
-            service=self.__service).exc(source_bucket=self.__source_bucket, prefix='warehouse/numerics/best/model')
+        try:
+            state = self.__get_assets(source_bucket=self.__source_bucket, origin='warehouse/numerics/best', target=config.Config().data_)
+        except RuntimeError as err:
+            raise err from err
 
-        # Compute
-        computation = []
-        for origin, target in zip(strings['source'], strings['destination']):
-            state = self.__get_assets(source_bucket=self.__source_bucket, origin=origin, target=target)
-            computation.append(state)
-        executions: list[int] = dask.compute(computation, scheduler='threads')[0]
-
-        if all(executions) == 0:
-            return True
-
-        sys.exit('Artefacts download step failure.')
+        logging.info(state)
