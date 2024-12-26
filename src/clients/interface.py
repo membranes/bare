@@ -6,7 +6,6 @@ import src.clients.basic
 import src.clients.cli
 import src.clients.future
 import src.clients.initial
-import src.elements.s3_parameters as s3p
 
 
 class Interface:
@@ -14,13 +13,11 @@ class Interface:
     Offers interaction interfaces.
     """
 
-    def __init__(self, s3_parameters: s3p.S3Parameters):
+    def __init__(self):
         """
 
-        :param s3_parameters:
+        Constructor
         """
-
-        self.__s3_parameters = s3_parameters
 
         # Logging
         logging.basicConfig(level=logging.INFO,
@@ -44,7 +41,7 @@ class Interface:
             case 'cli':
                 src.clients.cli.CLI(path=path).exc()
             case 'future':
-                src.clients.future.Future(path=path, s3_parameters=self.__s3_parameters).exc()
+                src.clients.future.Future(path=path).exc()
             case 'initial':
                 src.clients.initial.Initial(path=path).exc()
             case _:
