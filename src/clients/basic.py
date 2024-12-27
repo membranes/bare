@@ -1,5 +1,6 @@
 """Module basic.py"""
 import logging
+import os
 
 import gradio
 import transformers
@@ -17,22 +18,24 @@ class Basic:
     because the underlying software allows for extensive customisation.
     """
 
-    def __init__(self, path: str):
+    def __init__(self):
         """
-
-        :param path: The path to the underlying model's artefacts
+        Constructor
         """
 
         self.__configurations = config.Config()
 
         # Pipeline
-        self.__classifier = transformers.pipeline(task='ner', model=path, device=self.__configurations.device)
+        self.__classifier = transformers.pipeline(
+            task='ner', model=os.path.join(self.__configurations.data_, 'model'),
+            device=self.__configurations.device)
 
-        self.__css = ('.gradio-container-5-9-1 .prose table, .gradio-container-5-9-1 .prose tr, '
-               '.gradio-container-5-9-1 .prose td, .gradio-container-5-9-1 .prose th '
-               '{border:0 solid var(--body-text-color);}'
-               '.paginate.svelte-p5q82i.svelte-p5q82i.svelte-p5q82i '
-               '{justify-content:left; font-size:var(--text-md); margin-left: 10px;}')
+        self.__css = (
+            '.gradio-container-5-9-1 .prose table, .gradio-container-5-9-1 .prose tr, '
+            '.gradio-container-5-9-1 .prose td, .gradio-container-5-9-1 .prose th '
+            '{border:0 solid var(--body-text-color);}'
+            '.paginate.svelte-p5q82i.svelte-p5q82i.svelte-p5q82i '
+            '{justify-content:left; font-size:var(--text-md); margin-left: 10px;}')
 
     @staticmethod
     def __table(tokens) -> str:
