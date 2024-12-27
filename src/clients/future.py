@@ -1,5 +1,6 @@
 """Module future.py"""
 import logging
+import os
 import subprocess
 
 import gradio
@@ -14,17 +15,19 @@ class Future:
     A set-up that allows for custom interface options.
     """
 
-    def __init__(self, path: str):
+    def __init__(self):
         """
 
-        :param path: The path to the underlying model's artefacts
+        Constructor
         """
 
         self.__configurations = config.Config()
-        self.__algorithms = src.algorithms.interface.Interface(path=path)
+        self.__algorithms = src.algorithms.interface.Interface()
 
         # Pipeline
-        self.__classifier = transformers.pipeline(task='ner', model=path, device=self.__configurations.device)
+        self.__classifier = transformers.pipeline(
+            task='ner', model=os.path.join(self.__configurations.data_, 'model'),
+            device=self.__configurations.device)
 
     def __custom(self, paragraphs):
         """
