@@ -2,7 +2,7 @@ import numpy as np
 import pandas as pd
 
 
-class Restructure:
+class Page:
 
     def __init__(self, string: str):
 
