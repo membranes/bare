@@ -2,6 +2,7 @@
 import logging
 import os
 import subprocess
+import pandas as pd
 
 import gradio
 import transformers
@@ -39,8 +40,9 @@ class Future:
         """
 
         tokens = self.__classifier(paragraphs)
-        summary = {token['word']: [token['entity'], token['score']] for token in tokens}
+        summary = pd.DataFrame.from_records(data=tokens).to_dict(orient='list')
 
+        # For the future
         self.__algorithms.exc(paragraphs=paragraphs, tokens=tokens)
 
         return {'text': paragraphs, 'entities': tokens}, summary, tokens
