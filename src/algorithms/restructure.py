@@ -24,3 +24,7 @@ class Restructure:
                 text = ''.join([text, point[1]])
 
         return splittings
+
+    def exc(self):
+
+        splittings = self.__splittings()
