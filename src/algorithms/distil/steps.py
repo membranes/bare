@@ -1,16 +1,19 @@
-import os
+"""Module steps.py"""
 import logging
+import os
 
 import pandas as pd
 
 import config
-import src.algorithms.distil.yields
 import src.algorithms.distil.tokenizer
-
+import src.algorithms.distil.yields
 import src.functions.objects
 
 
 class Steps:
+    """
+    The steps for case distilBert
+    """
 
     def __init__(self):
         """
