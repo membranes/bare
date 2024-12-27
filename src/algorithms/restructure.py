@@ -1,4 +1,6 @@
 import numpy as np
+import pandas as pd
+
 
 class Restructure:
 
@@ -25,6 +27,23 @@ class Restructure:
 
         return splittings
 
+    def __page(self, splittings: list) -> pd.DataFrame:
+
+        page = pd.DataFrame.from_records(data=splittings)
+        page = page.copy().loc[page['start'].notna(), :]
+
+        # Setting the character indices as type integer
+        page['start'] = page['start'].astype(dtype=int)
+        page['end'] = page['start'] + page['word'].str.len()
+
+        # Ascertaining the words order
+        page.sort_values(by='start', inplace=True)
+
+        return page
+
     def exc(self):
 
         splittings = self.__splittings()
+
+        return self.__page(splittings=splittings)
+
