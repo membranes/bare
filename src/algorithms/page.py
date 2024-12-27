@@ -29,17 +29,17 @@ class Page:
 
     def __page(self, splittings: list) -> pd.DataFrame:
 
-        page = pd.DataFrame.from_records(data=splittings)
-        page = page.copy().loc[page['start'].notna(), :]
+        frame = pd.DataFrame.from_records(data=splittings)
+        frame = frame.copy().loc[frame['start'].notna(), :]
 
         # Setting the character indices as type integer
-        page['start'] = page['start'].astype(dtype=int)
-        page['end'] = page['start'] + page['word'].str.len()
+        frame['start'] = frame['start'].astype(dtype=int)
+        frame['end'] = frame['start'] + frame['word'].str.len()
 
         # Ascertaining the words order
-        page.sort_values(by='start', inplace=True)
+        frame.sort_values(by='start', inplace=True)
 
-        return page
+        return frame
 
     def exc(self):
 
