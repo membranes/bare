@@ -25,10 +25,9 @@ class Interface:
                             datefmt='%Y-%m-%d %H:%M:%S')
         self.__logger = logging.getLogger(__name__)
 
-    def exc(self, path: str, client: typing.Literal['basic', 'cli', 'future', 'initial'] = 'future'):
+    def exc(self, client: typing.Literal['basic', 'cli', 'future', 'initial'] = 'future'):
         """
 
-        :param path: The model's path
         :param client: A client via which to interact with the model.
         :return:
         """
@@ -37,12 +36,12 @@ class Interface:
 
         match client:
             case 'basic':
-                src.clients.basic.Basic(path=path).exc()
+                src.clients.basic.Basic().exc()
             case 'cli':
-                src.clients.cli.CLI(path=path).exc()
+                src.clients.cli.CLI().exc()
             case 'future':
-                src.clients.future.Future(path=path).exc()
+                src.clients.future.Future().exc()
             case 'initial':
-                src.clients.initial.Initial(path=path).exc()
+                src.clients.initial.Initial().exc()
             case _:
                 return 'Unknown'
