@@ -9,6 +9,8 @@ class Detections:
 
         :param tokens: The words/word-pieces that have been classified, i.e., the model
                        estimates that they are not miscellaneous entities.
+                       list({'entity': ..., 'score': ..., 'index': ..., 'word': ..., 'start': ..., 'end': ...},
+                            ...)
         """
 
         self.__tokens = tokens
@@ -49,7 +51,6 @@ class Detections:
         :param blob:
         :return:
         """
-
 
         data = blob.copy()
         data[['annotation', 'category']] = data['entity'].str.split('-', expand=True)
