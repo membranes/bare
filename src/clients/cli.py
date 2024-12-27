@@ -1,5 +1,6 @@
 """Module cli.py"""
 import logging
+import os
 
 import transformers
 
@@ -11,14 +12,18 @@ class CLI:
     Command Line Interface
     """
 
-    def __init__(self, path: str):
+    def __init__(self):
         """
 
-        :param path: The path to the underlying model's artefacts
+        Constructor
         """
+
+        self.__configurations = config.Config()
 
         # Pipeline
-        self.__classifier = transformers.pipeline(task='ner', model=path, device=config.Config().device)
+        self.__classifier = transformers.pipeline(
+            task='ner', model=os.path.join(self.__configurations.data_, 'model'),
+            device=config.Config().device)
 
         # Logging
         logging.basicConfig(level=logging.INFO,
