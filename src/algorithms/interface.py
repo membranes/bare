@@ -4,8 +4,10 @@ import os
 
 import pandas as pd
 
+import config
 import src.functions.objects
 import src.settings.arguments
+import src.algorithms.distil.steps
 
 
 class Interface:
@@ -13,11 +15,15 @@ class Interface:
     Executes the functions that process the input text, and the tokens classifications results.
     """
 
-    def __init__(self, path: str):
+    def __init__(self):
+        """
+        Constructor
         """
 
-        :param path: The path to the underlying model's artefacts
-        """
+        # Objects
+        objects = src.functions.objects.Objects()
+        self.__architecture = objects.read(
+            uri=os.path.join(config.Config().data_, 'architecture.json'))['name']
 
         # Logging
         logging.basicConfig(level=logging.INFO,
@@ -25,16 +31,9 @@ class Interface:
                             datefmt='%Y-%m-%d %H:%M:%S')
         self.__logger = logging.getLogger(__name__)
 
-        # Objects
-        objects = src.functions.objects.Objects()
 
-        self.__architecture = objects.read(uri=os.path.join(os.path.dirname(path), 'architecture.json'))['name']
-        self.__logger.info(self.__architecture)
 
-        self.__config = objects.read(uri=os.path.join(path, 'config.json'))
-        self.__logger.info(self.__config)
-
-    def __structuring(self):
+    def __structuring(self, frame: pd.DataFrame):
         """
         In Progress
 
@@ -43,7 +42,8 @@ class Interface:
 
         match self.__architecture:
             case 'distil':
-                self.__logger.info('proceed')
+                self.__logger.info('%s ...', self.__architecture)
+                src.algorithms.distil.steps.Steps().exc(frame=frame)
             case _:
                 self.__logger.info('Unknown')
 
@@ -55,16 +55,13 @@ class Interface:
         :return:
         """
 
-        sentences = paragraphs.splitlines()
-        frame = pd.DataFrame(data={'sentence': sentences})
-        self.__logger.info(sentences)
-        self.__logger.info(frame)
-
-
         data = pd.DataFrame.from_records(data=tokens)
         data.sort_values(by='index', inplace=True)
         data.info()
         self.__logger.info(data)
 
-        self.__structuring()
 
+        frame = pd.DataFrame(data={'sentence': [paragraphs]})
+        self.__logger.info(paragraphs)
+        self.__logger.info(frame)
+        self.__structuring(frame=frame)
