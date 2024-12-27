@@ -19,7 +19,7 @@ class Page:
     def __splittings(self) -> list:
         """
 
-        :return:
+        :return: list({'start': ,'word': }, ...)
         """
 
         points = enumerate(self.__string)
@@ -39,11 +39,12 @@ class Page:
 
         return splittings
 
-    def __page(self, splittings: list) -> pd.DataFrame:
+    @staticmethod
+    def __page(splittings: list) -> pd.DataFrame:
         """
 
         :param splittings:
-        :return:
+        :return: pandas.DataFrame(data={'start': ...,'word': ...,'end': ...})
         """
 
         frame = pd.DataFrame.from_records(data=splittings)
