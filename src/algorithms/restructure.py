@@ -6,18 +6,21 @@ class Restructure:
 
         self.__string = string
 
-    def __splittings(self):
+    def __splittings(self) -> list:
 
-        indices = enumerate(self.__string)
+        points = enumerate(self.__string)
         text = ''
         place = np.empty(0, dtype=int)
-        reference = []
-        for term in list(indices):
+        splittings = []
+        
+        for point in list(points):
 
-            if term[1] == ' ' or term[1] == '(' or term[1] == ')':
-                reference.append({'start': place[0] if len(place) > 0 else np.nan, 'word': text})
+            if point[1] == ' ' or point[1] == '(' or point[1] == ')':
+                splittings.append({'start': place[0] if len(place) > 0 else np.nan, 'word': text})
                 text = ''
                 place = np.empty(0, dtype=int)
             else:
-                place = np.append(place, term[0])
-                text = ''.join([text, term[1]])
+                place = np.append(place, point[0])
+                text = ''.join([text, point[1]])
+
+        return splittings
