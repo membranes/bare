@@ -40,12 +40,13 @@ class Future:
         """
 
         tokens = self.__classifier(paragraphs)
-        summary = pd.DataFrame.from_records(data=tokens).to_dict(orient='list')
+        summary = pd.DataFrame.from_records(data=tokens)
+        summary = summary.copy()[['word', 'entity', 'score']]
 
         # For the future
         self.__algorithms.exc(paragraphs=paragraphs, tokens=tokens)
 
-        return {'text': paragraphs, 'entities': tokens}, summary, tokens
+        return {'text': paragraphs, 'entities': tokens}, summary.to_dict(orient='records'), tokens
 
     @staticmethod
     def __kill() -> str:
