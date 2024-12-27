@@ -8,7 +8,9 @@ class Arguments(typing.NamedTuple):
     Attributes<br>
     ----------<br>
 
-    MAX_LENGTH: <b>int</b>  The maximum number of tokens<br>
+    MAX_LENGTH: <b>int</b>  The maximum number of tokens.  Not used; refer to
+        <a href="https://huggingface.co/docs/transformers/model_doc/distilbert#transformers.DistilBertConfig" target="_blank">
+        default (max_position_embeddings)</a>.<br>
     TRAIN_BATCH_SIZE : <b>int</b> The batch size for the training stage<br>
     VALID_BATCH_SIZE : <b>int</b> The batch size for the validation stage<br>
     TEST_BATCH_SIZE : <b>int</b> The batch size for the testing stage<br>
