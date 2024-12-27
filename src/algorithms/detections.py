@@ -42,7 +42,8 @@ class Detections:
 
         return data
 
-    def __labels(self, blob: pd.DataFrame):
+    @staticmethod
+    def __labels(blob: pd.DataFrame):
         """
 
         :param blob:
@@ -56,9 +57,13 @@ class Detections:
         return data
 
     def exc(self):
+        """
+
+        :return:
+        """
 
         data = self.__get_data()
         data = self.__anomaly(blob=data)
         data = self.__labels(blob=data)
 
-
+        return data
