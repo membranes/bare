@@ -1,14 +1,26 @@
+"""Module page.py"""
 import numpy as np
 import pandas as pd
 
 
 class Page:
+    """
+    Builds the page details of an input text.
+    """
 
     def __init__(self, string: str):
+        """
+
+        :param string: An input string; composed of sentences or/and paragraphs
+        """
 
         self.__string = string
 
     def __splittings(self) -> list:
+        """
+
+        :return:
+        """
 
         points = enumerate(self.__string)
         text = ''
@@ -28,6 +40,11 @@ class Page:
         return splittings
 
     def __page(self, splittings: list) -> pd.DataFrame:
+        """
+
+        :param splittings:
+        :return:
+        """
 
         frame = pd.DataFrame.from_records(data=splittings)
         frame = frame.copy().loc[frame['start'].notna(), :]
@@ -42,6 +59,10 @@ class Page:
         return frame
 
     def exc(self):
+        """
+
+        :return:
+        """
 
         splittings = self.__splittings()
 
