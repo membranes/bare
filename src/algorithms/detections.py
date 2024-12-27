@@ -42,11 +42,23 @@ class Detections:
 
         return data
 
+    def __labels(self, blob: pd.DataFrame):
+        """
+
+        :param blob:
+        :return:
+        """
+
+
+        data = blob.copy()
+        data[['annotation', 'category']] = data['entity'].str.split('-', expand=True)
+
+        return data
+
     def exc(self):
 
         data = self.__get_data()
         data = self.__anomaly(blob=data)
-
-
+        data = self.__labels(blob=data)
 
 
