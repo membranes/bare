@@ -13,18 +13,20 @@ class Mappings:
         :param detections: The non-miscellaneous tokens detected by the model.
         """
 
+        self.__page = page
         self.__detections = detections
 
     def __intersects(self, instance: np.ndarray):
         """
 
-        :param instance:
+        :param instance: Part of an instance of self.__page.  It consists of an instance's
+                         word start index [0], and word end index [1]
         :return:
         """
 
-        # Are any of the <indices> within the range of the instance?
-        ice = np.linspace(instance[0], instance[1], instance[1] - instance[0] + 1, dtype=int)
-        conditionals = self.__detections['indices'].apply(lambda x: np.isin(x, ice).any())
+        # Do any of the tokens of self.__detections classify this instance?
+        indices_of_instance = np.linspace(instance[0], instance[1], instance[1] - instance[0] + 1, dtype=int)
+        conditionals = self.__detections['indices'].apply(lambda x: np.isin(x, indices_of_instance).any())
 
         return conditionals
 
