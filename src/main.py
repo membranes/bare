@@ -1,6 +1,5 @@
 """Module main.py"""
 import argparse
-import glob
 import logging
 import os
 import sys
