@@ -61,14 +61,17 @@ class Detections:
 
         return data
 
-    def exc(self):
+    def exc(self, m_config: dict):
         """
 
+        :param m_config: The underlying model's configuration dictionary
         :return:
         """
 
         data = self.__get_data()
         data = self.__anomaly(blob=data)
         data = self.__labels(blob=data)
+
+        data['code'] = data['entity'].map(m_config['label2id'])
 
         return data
