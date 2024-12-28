@@ -96,3 +96,5 @@ class Mappings:
         data = self.__page.copy()
         data['tag'] = np.apply_along_axis(func1d=self.__tag, axis=1, arr=data[['start', 'end']])
         data['score'] = np.apply_along_axis(func1d=self.__score, axis=1, arr=data[['start', 'end']])
+
+        return data
