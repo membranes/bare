@@ -72,6 +72,6 @@ class Detections:
         data = self.__anomaly(blob=data)
         data = self.__labels(blob=data)
 
-        data['code_of_tag'] = data['entity'].map(m_config['label2id'])
+        data['code_of_tag_p'] = data['entity'].map(m_config['label2id'])
 
         return data
