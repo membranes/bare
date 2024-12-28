@@ -83,6 +83,7 @@ class Mappings:
         # tag
         data['conditionals'] = np.apply_along_axis(func1d=self.__intersects, axis=1, arr=data[['start', 'end']])
         data['tag'] = np.apply_along_axis(func1d=self.__tag, axis=1, arr=data['conditionals'])
+        data['score'] = np.apply_along_axis(func1d=self.__score, axis=1, arr=data['conditionals'])
 
         # score
         # values = data.loc[0:5, 'score'].to_numpy()
