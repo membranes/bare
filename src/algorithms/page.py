@@ -26,7 +26,7 @@ class Page:
         text = ''
         place = np.empty(0, dtype=int)
         splittings = []
-        
+
         for point in list(points):
 
             if point[1] == ' ' or point[1] == '(' or point[1] == ')':
