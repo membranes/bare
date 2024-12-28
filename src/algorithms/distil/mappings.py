@@ -1,6 +1,8 @@
+import logging
+import typing
+
 import numpy as np
 import pandas as pd
-import typing
 
 
 class Mappings:
@@ -45,7 +47,15 @@ class Mappings:
 
         return instances, n_categories
 
-    def __tag(self, conditionals) -> str:
+    def __tag(self, instance: np.ndarray) -> str:
+        """
+
+        :param instance:
+        :return:
+        """
+
+        conditionals = self.__intersects(instance=instance)
+        logging.info(conditionals)
 
         if sum(conditionals) == 0:
             return ''
@@ -57,7 +67,15 @@ class Mappings:
         else:
             return ''
 
-    def __score(self, conditionals) -> float:
+    def __score(self, instance: np.ndarray) -> float:
+        """
+
+        :param instance:
+        :return:
+        """
+
+        conditionals = self.__intersects(instance=instance)
+        logging.info(conditionals)
 
         if sum(conditionals) == 0:
             return np.nan
@@ -69,9 +87,6 @@ class Mappings:
         else:
             return np.nan
 
-
-
-
     def exc(self):
         """
 
@@ -79,12 +94,5 @@ class Mappings:
         """
 
         data = self.__page.copy()
-
-        # tag
-        data['conditionals'] = np.apply_along_axis(func1d=self.__intersects, axis=1, arr=data[['start', 'end']])
-        data['tag'] = np.apply_along_axis(func1d=self.__tag, axis=1, arr=data['conditionals'])
-        data['score'] = np.apply_along_axis(func1d=self.__score, axis=1, arr=data['conditionals'])
-
-        # score
-        # values = data.loc[0:5, 'score'].to_numpy()
-        # values.prod()
+        data['tag'] = np.apply_along_axis(func1d=self.__tag, axis=1, arr=data[['start', 'end']])
+        data['score'] = np.apply_along_axis(func1d=self.__score, axis=1, arr=data[['start', 'end']])
