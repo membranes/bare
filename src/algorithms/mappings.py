@@ -65,7 +65,7 @@ class Mappings:
         instances, n_categories = self.__instances(conditionals=conditionals)
 
         if n_categories == 1:
-            return instances['code'].to_numpy()[0]
+            return instances['code_of_tag'].to_numpy()[0]
 
         return np.nan
 
