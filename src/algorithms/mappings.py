@@ -68,8 +68,8 @@ class Mappings:
 
         if n_categories == 1:
             return instances['entity'].values[0]
-        else:
-            return ''
+
+        return ''
 
     def __score(self, instance: np.ndarray) -> float:
         """
@@ -88,8 +88,8 @@ class Mappings:
 
         if n_categories == 1:
             return instances['score'].to_numpy().prod()
-        else:
-            return np.nan
+
+        return np.nan
 
     def exc(self):
         """
