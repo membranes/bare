@@ -1,12 +1,15 @@
 """Module interface.py"""
 import logging
 import os
+import random
+import string
 
 import config
 import src.algorithms.detections
 import src.algorithms.mappings
 import src.algorithms.page
 import src.functions.objects
+import src.functions.streams
 
 
 class Interface:
@@ -20,6 +23,10 @@ class Interface:
         """
 
         self.__configurations = config.Config()
+        self.__streams = src.functions.streams.Streams()
+
+        # Characters space
+        self.__characters = string.ascii_lowercase + string.digits
 
         # Logging
         logging.basicConfig(level=logging.INFO,
@@ -38,6 +45,16 @@ class Interface:
 
         return objects.read(uri=uri)
 
+    def __path(self) -> str:
+        """
+
+        :return:
+        """
+
+        name = random.choices(self.__characters, k=13)
+
+        return  os.path.join(self.__configurations.interactions_, f'{name}.csv')
+
     def exc(self, text: str, tokens: list):
         """
 
@@ -55,3 +72,7 @@ class Interface:
         self.__logger.info('Page:\n%s', page)
         self.__logger.info('Detections:\n%s', detections)
         self.__logger.info('Mappings:\n%s', mappings)
+
+        self.__streams.write(blob=mappings, path=self.__path())
+
+
