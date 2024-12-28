@@ -28,9 +28,12 @@ class Interface:
         self.__logger = logging.getLogger(__name__)
 
     def __m_config(self) -> dict:
+        """
+
+        :return:
+        """
 
         objects = src.functions.objects.Objects()
-
         uri = os.path.join(self.__configurations.data_, 'model', 'config.json')
 
         return objects.read(uri=uri)
