@@ -1,3 +1,4 @@
+"""Module mappings.py"""
 import logging
 import typing
 
@@ -6,6 +7,9 @@ import pandas as pd
 
 
 class Mappings:
+    """
+    Of input text page and detections.
+    """
 
     def __init__(self, page: pd.DataFrame, detections: pd.DataFrame):
         """
@@ -55,7 +59,7 @@ class Mappings:
         """
 
         conditionals = self.__intersects(instance=instance)
-        logging.info(conditionals)
+        logging.info('Type of conditionals: %s', type(conditionals))
 
         if sum(conditionals) == 0:
             return ''
@@ -75,7 +79,7 @@ class Mappings:
         """
 
         conditionals = self.__intersects(instance=instance)
-        logging.info(conditionals)
+        logging.info('Type of conditionals: %s', type(conditionals))
 
         if sum(conditionals) == 0:
             return np.nan
