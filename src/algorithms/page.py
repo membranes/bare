@@ -8,13 +8,13 @@ class Page:
     Builds the page details of an input text.
     """
 
-    def __init__(self, string: str):
+    def __init__(self, text: str):
         """
 
-        :param string: An input string; composed of sentences or/and paragraphs
+        :param text: An input text; composed of sentences or/and paragraphs
         """
 
-        self.__string = string
+        self.__text = text
 
     def __splittings(self) -> list:
         """
@@ -22,7 +22,7 @@ class Page:
         :return: list({'start': ,'word': }, ...)
         """
 
-        points = enumerate(self.__string)
+        points = enumerate(self.__text)
         text = ''
         place = np.empty(0, dtype=int)
         splittings = []
@@ -68,4 +68,3 @@ class Page:
         splittings = self.__splittings()
 
         return self.__page(splittings=splittings)
-
