@@ -51,7 +51,7 @@ class Interface:
         :return:
         """
 
-        name = random.choices(self.__characters, k=13)
+        name = ''.join(random.choices(self.__characters, k=13))
 
         return  os.path.join(self.__configurations.interactions_, f'{name}.csv')
 
