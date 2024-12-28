@@ -63,16 +63,20 @@ class Interface:
         :return:
         """
 
+        # The underlying model's configuration dictionary.
         m_config = self.__m_config()
 
+        # The input text
         page = src.algorithms.page.Page(text=text).exc()
-        detections = src.algorithms.detections.Detections(tokens=tokens).exc(m_config=m_config)
-        mappings = src.algorithms.mappings.Mappings(page=page, detections=detections).exc(m_config=m_config)
-
         self.__logger.info('Page:\n%s', page)
+
+        # The detections
+        detections = src.algorithms.detections.Detections(tokens=tokens).exc(m_config=m_config)
         self.__logger.info('Detections:\n%s', detections)
+
+        # Hence, map
+        mappings = src.algorithms.mappings.Mappings(page=page, detections=detections).exc(m_config=m_config)
         self.__logger.info('Mappings:\n%s', mappings)
 
+        # Save
         self.__streams.write(blob=mappings, path=self.__path())
-
-
