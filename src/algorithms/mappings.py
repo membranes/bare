@@ -1,5 +1,4 @@
 """Module mappings.py"""
-import logging
 import typing
 
 import numpy as np
@@ -22,7 +21,7 @@ class Mappings:
         self.__page = page
         self.__detections = detections
 
-    def __intersects(self, instance: np.ndarray):
+    def __intersects(self, instance: np.ndarray) -> pd.Series:
         """
 
         :param instance: Part of an instance of self.__page.  It consists of an instance's
@@ -51,7 +50,7 @@ class Mappings:
 
         return instances, n_categories
 
-    def __tag(self, instance: np.ndarray) -> str:
+    def __code_of_tag(self, instance: np.ndarray) -> float:
         """
 
         :param instance:
@@ -59,17 +58,16 @@ class Mappings:
         """
 
         conditionals = self.__intersects(instance=instance)
-        logging.info('Type of conditionals: %s', type(conditionals))
 
         if sum(conditionals) == 0:
-            return ''
+            return np.nan
 
         instances, n_categories = self.__instances(conditionals=conditionals)
 
         if n_categories == 1:
-            return instances['entity'].values[0]
+            return instances['code'].to_numpy()[0]
 
-        return ''
+        return np.nan
 
     def __score(self, instance: np.ndarray) -> float:
         """
@@ -79,7 +77,6 @@ class Mappings:
         """
 
         conditionals = self.__intersects(instance=instance)
-        logging.info('Type of conditionals: %s', type(conditionals))
 
         if sum(conditionals) == 0:
             return np.nan
@@ -98,7 +95,7 @@ class Mappings:
         """
 
         data = self.__page.copy()
-        data['tag'] = np.apply_along_axis(func1d=self.__tag, axis=1, arr=data[['start', 'end']])
+        data['code_of_tag'] = np.apply_along_axis(func1d=self.__code_of_tag, axis=1, arr=data[['start', 'end']])
         data['score'] = np.apply_along_axis(func1d=self.__score, axis=1, arr=data[['start', 'end']])
 
         return data
