@@ -6,6 +6,8 @@ import src.clients.basic
 import src.clients.cli
 import src.clients.future
 import src.clients.initial
+import src.elements.s3_parameters as s3p
+import src.elements.service as sr
 
 
 class Interface:
@@ -13,11 +15,16 @@ class Interface:
     Offers interaction interfaces.
     """
 
-    def __init__(self):
+    def __init__(self, service: sr.Service, s3_parameters: s3p.S3Parameters):
         """
 
-        Constructor
+        :param service: A suite of services for interacting with Amazon Web Services.
+        :param s3_parameters: The overarching S3 (Simple Storage Service) parameters
+                              settings of this project, e.g., region code name, buckets, etc.
         """
+
+        self.__service: sr.Service = service
+        self.__s3_parameters: s3p.S3Parameters = s3_parameters
 
         # Logging
         logging.basicConfig(level=logging.INFO,
@@ -40,7 +47,7 @@ class Interface:
             case 'cli':
                 src.clients.cli.CLI().exc()
             case 'future':
-                src.clients.future.Future().exc()
+                src.clients.future.Future(service=self.__service, s3_parameters=self.__s3_parameters).exc()
             case 'initial':
                 src.clients.initial.Initial().exc()
             case _:
