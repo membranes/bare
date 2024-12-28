@@ -64,7 +64,7 @@ class Detections:
     def exc(self, m_config: dict):
         """
 
-        :param m_config: The underlying model's configuration dictionary
+        :param m_config: The underlying model's configuration dictionary.
         :return:
         """
 
