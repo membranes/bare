@@ -9,6 +9,7 @@ import transformers
 
 import config
 import src.algorithms.interface
+import src.functions.cache
 import src.transfer.interface
 
 import src.elements.s3_parameters as s3p
@@ -64,10 +65,11 @@ class Future:
         :return:
         """
 
-        logging.info('Transferring & Terminating ...')
+        logging.info('Transferring & Terminating')
 
-        # Transferring interactions data
+        # Transferring interactions data, and delete cache points
         src.transfer.interface.Interface(service=self.__service, s3_parameters=self.__s3_parameters).exc()
+        src.functions.cache.Cache().exc()
 
         return subprocess.check_output('kill -9 $(lsof -t -i:7860)', shell=True, text=True)
 
