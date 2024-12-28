@@ -96,9 +96,15 @@ class Mappings:
         """
 
         data = self.__page.copy()
+
+        # Mapping to detected tokens
         data['code_of_tag'] = np.apply_along_axis(func1d=self.__code_of_tag, axis=1, arr=data[['start', 'end']])
+        data['code_of_tag'].fillna(value=m_config['label2id']['O'])
+
+        # Mapping to scores thereof
         data['score'] = np.apply_along_axis(func1d=self.__score, axis=1, arr=data[['start', 'end']])
 
+        # Finally
         data['tag'] = data['code_of_tag'].map(lambda x: m_config['id2label'][str(int(x))], na_action='ignore')
 
         return data
