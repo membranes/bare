@@ -2,12 +2,11 @@
 import logging
 import os
 
-import pandas as pd
-
 import config
+import src.algorithms.detections
+import src.algorithms.mappings
+import src.algorithms.page
 import src.functions.objects
-import src.settings.arguments
-import src.algorithms.distil.steps
 
 
 class Interface:
@@ -31,37 +30,18 @@ class Interface:
                             datefmt='%Y-%m-%d %H:%M:%S')
         self.__logger = logging.getLogger(__name__)
 
-
-
-    def __structuring(self, frame: pd.DataFrame):
-        """
-        In Progress
-
-        :return:
+    def exc(self, text: str, tokens: list):
         """
 
-        match self.__architecture:
-            case 'distil':
-                self.__logger.info('%s ...', self.__architecture)
-                src.algorithms.distil.steps.Steps().exc(frame=frame)
-            case _:
-                self.__logger.info('Unknown')
-
-    def exc(self, paragraphs: str, tokens: list):
-        """
-
-        :param paragraphs:
+        :param text:
         :param tokens:
         :return:
         """
 
-        data = pd.DataFrame.from_records(data=tokens)
-        data.sort_values(by='index', inplace=True)
-        data.info()
-        self.__logger.info(data)
-
-
-        frame = pd.DataFrame(data={'sentence': [paragraphs]})
-        self.__logger.info(paragraphs)
-        self.__logger.info(frame)
-        self.__structuring(frame=frame)
+        page = src.algorithms.page.Page(text=text).exc()
+        detections = src.algorithms.detections.Detections(tokens=tokens).exc()
+        mappings = src.algorithms.mappings.Mappings(page=page, detections=detections).exc()
+        
+        self.__logger.info('Page:\n%s', page)
+        self.__logger.info('Detections:\n%s', detections)
+        self.__logger.info('Mappings:\n%s', mappings)
