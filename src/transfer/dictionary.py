@@ -40,6 +40,9 @@ class Dictionary:
         files: list[str] = glob.glob(pathname=os.path.join(path, '**', f'*.{extension}'),
                                      recursive=True)
 
+        if len(files) == 0:
+            return pd.DataFrame()
+
         details: list[dict] = [
             {'file': file,
              'vertex': file.rsplit(splitter, maxsplit=1)[1],
@@ -58,6 +61,9 @@ class Dictionary:
         """
 
         local: pd.DataFrame = self.__local(path=path, extension=extension)
+
+        if local.empty:
+            return pd.DataFrame()
 
         # Building the Amazon S3 strings
         frame = local.assign(key=prefix + local["vertex"])
