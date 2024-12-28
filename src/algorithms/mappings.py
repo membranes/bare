@@ -1,5 +1,4 @@
 """Module mappings.py"""
-import logging
 import typing
 
 import numpy as np
