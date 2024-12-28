@@ -1,8 +1,12 @@
+"""Module detections.py"""
 import numpy as np
 import pandas as pd
 
 
 class Detections:
+    """
+    Detections
+    """
 
     def __init__(self, tokens: list):
         """
