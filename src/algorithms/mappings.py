@@ -88,14 +88,17 @@ class Mappings:
 
         return np.nan
 
-    def exc(self):
+    def exc(self, m_config: dict):
         """
 
+        :param m_config: The underlying model's configuration dictionary.
         :return:
         """
 
         data = self.__page.copy()
         data['code_of_tag'] = np.apply_along_axis(func1d=self.__code_of_tag, axis=1, arr=data[['start', 'end']])
         data['score'] = np.apply_along_axis(func1d=self.__score, axis=1, arr=data[['start', 'end']])
+
+        data['tag'] = data['code_of_tag'].map(m_config['id2label'])
 
         return data
