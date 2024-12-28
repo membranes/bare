@@ -9,6 +9,10 @@ import transformers
 
 import config
 import src.algorithms.interface
+import src.transfer.interface
+
+import src.elements.s3_parameters as s3p
+import src.elements.service as sr
 
 
 class Future:
@@ -16,12 +20,18 @@ class Future:
     A set-up that allows for custom interface options.
     """
 
-    def __init__(self):
+    def __init__(self, service: sr.Service, s3_parameters: s3p.S3Parameters):
         """
 
-        Constructor
+        :param service: A suite of services for interacting with Amazon Web Services.
+        :param s3_parameters: The overarching S3 (Simple Storage Service) parameters
+                              settings of this project, e.g., region code name, buckets, etc.
         """
 
+        self.__service: sr.Service = service
+        self.__s3_parameters: s3p.S3Parameters = s3_parameters
+
+        # Instances
         self.__configurations = config.Config()
         self.__algorithms = src.algorithms.interface.Interface()
 
@@ -48,14 +58,16 @@ class Future:
 
         return {'text': text, 'entities': tokens}, summary.to_dict(orient='records'), tokens
 
-    @staticmethod
-    def __kill() -> str:
+    def __kill(self) -> str:
         """
 
         :return:
         """
 
-        logging.info('Terminating ...')
+        logging.info('Transferring & Terminating ...')
+
+        # Transferring interactions data
+        src.transfer.interface.Interface(service=self.__service, s3_parameters=self.__s3_parameters).exc()
 
         return subprocess.check_output('kill -9 $(lsof -t -i:7860)', shell=True, text=True)
 
