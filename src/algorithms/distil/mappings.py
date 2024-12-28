@@ -78,8 +78,10 @@ class Mappings:
         :return:
         """
 
+        data = self.__page.copy()
+
         # tag
-        # np.apply_along_axis(func1d=intersects, axis=1, arr=page[['start', 'end']])
+        data['conditionals'] = np.apply_along_axis(func1d=self.__intersects, axis=1, arr=data[['start', 'end']])
 
         # score
         # values = data.loc[0:5, 'score'].to_numpy()
