@@ -2,9 +2,9 @@
 import logging
 import os
 import subprocess
-import pandas as pd
 
 import gradio
+import pandas as pd
 import transformers
 
 import config
@@ -32,21 +32,21 @@ class Future:
             tokenizer=os.path.join(self.__configurations.data_, 'model'),
             device=self.__configurations.device)
 
-    def __custom(self, paragraphs):
+    def __custom(self, text):
         """
 
-        :param paragraphs:
+        :param text:
         :return:
         """
 
-        tokens = self.__classifier(paragraphs)
+        tokens = self.__classifier(text)
         summary = pd.DataFrame.from_records(data=tokens)
         summary = summary.copy()[['word', 'entity', 'score']]
 
         # For the future
-        self.__algorithms.exc(paragraphs=paragraphs, tokens=tokens)
+        self.__algorithms.exc(text=text, tokens=tokens)
 
-        return {'text': paragraphs, 'entities': tokens}, summary.to_dict(orient='records'), tokens
+        return {'text': text, 'entities': tokens}, summary.to_dict(orient='records'), tokens
 
     @staticmethod
     def __kill() -> str:
@@ -73,18 +73,18 @@ class Future:
 
             with gradio.Row():
                 with gradio.Column(scale=3):
-                    paragraphs = gradio.Textbox(label='paragraphs', placeholder="Enter sentence here...", max_length=2000)
+                    text = gradio.Textbox(label='TEXT', placeholder="Enter sentence here...", max_length=2000)
                 with gradio.Column(scale=2):
-                    detections = gradio.HighlightedText(label='detections', interactive=False)
-                    scores = gradio.JSON(label='scores')
-                    compact = gradio.Textbox(label='compact')
+                    detections = gradio.HighlightedText(label='DETECTIONS', interactive=False)
+                    scores = gradio.JSON(label='SCORES')
+                    compact = gradio.Textbox(label='COMPACT')
             with gradio.Row():
                 detect = gradio.Button(value='Submit')
-                gradio.ClearButton([paragraphs, detections, scores, compact])
+                gradio.ClearButton([text, detections, scores, compact])
                 stop = gradio.Button('Stop', variant='stop', visible=True, size='lg')
 
-            detect.click(self.__custom, inputs=paragraphs, outputs=[detections, scores, compact])
+            detect.click(self.__custom, inputs=text, outputs=[detections, scores, compact])
             stop.click(fn=self.__kill)
-            gradio.Examples(examples=self.__configurations.examples, inputs=[paragraphs], examples_per_page=1)
+            gradio.Examples(examples=self.__configurations.examples, inputs=[text], examples_per_page=1)
 
         demo.launch(server_port=7860)
