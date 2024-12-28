@@ -26,7 +26,7 @@ class Interface:
         self.__streams = src.functions.streams.Streams()
 
         # Characters space
-        self.__characters = string.ascii_lowercase + string.digits
+        self.__characters = string.ascii_lowercase + string.digits + string.ascii_uppercase
 
         # Logging
         logging.basicConfig(level=logging.INFO,
@@ -51,7 +51,7 @@ class Interface:
         :return:
         """
 
-        name = ''.join(random.choices(self.__characters, k=13))
+        name = ''.join(random.choices(self.__characters, k=23))
 
         return  os.path.join(self.__configurations.interactions_, f'{name}.csv')
 
