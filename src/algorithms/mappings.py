@@ -1,4 +1,5 @@
 """Module mappings.py"""
+import logging
 import typing
 
 import numpy as np
@@ -50,7 +51,7 @@ class Mappings:
 
         return instances, n_categories
 
-    def __code_of_tag(self, instance: np.ndarray) -> float:
+    def __code_of_tag(self, instance: np.ndarray) -> int:
         """
 
         :param instance:
@@ -60,14 +61,14 @@ class Mappings:
         conditionals = self.__intersects(instance=instance)
 
         if sum(conditionals) == 0:
-            return np.nan
+            return -1
 
         instances, n_categories = self.__instances(conditionals=conditionals)
 
         if n_categories == 1:
-            return instances['code_of_tag'].to_numpy()[0]
+            return instances['code_of_tag_p'].to_numpy()[0]
 
-        return np.nan
+        return -1
 
     def __score(self, instance: np.ndarray) -> float:
         """
@@ -98,14 +99,14 @@ class Mappings:
         data = self.__page.copy()
 
         # Mapping to detected tokens
-        data['code_of_tag'] = np.apply_along_axis(func1d=self.__code_of_tag, axis=1, arr=data[['start', 'end']])
-        data['code_of_tag'] = data['code_of_tag'].fillna(value=m_config['label2id']['O'])
-        data['code_of_tag'] = data['code_of_tag'].astype(dtype=int)
+        data['code_of_tag_p'] = np.apply_along_axis(func1d=self.__code_of_tag, axis=1, arr=data[['start', 'end']])
+        data['code_of_tag_p'] = data['code_of_tag_p'].where(data['code_of_tag_p'] > -1, m_config['label2id']['O'])
+        # data['code_of_tag_p'] = data['code_of_tag_p'].astype(dtype=int)
 
         # Mapping to scores thereof
         data['score'] = np.apply_along_axis(func1d=self.__score, axis=1, arr=data[['start', 'end']])
 
         # Finally.  An NaN value should not exist; just in case.
-        data['tag'] = data['code_of_tag'].map(lambda x: m_config['id2label'][str(int(x))], na_action='ignore')
+        data['tag_p'] = data['code_of_tag_p'].map(lambda x: m_config['id2label'][str(int(x))], na_action='ignore')
 
         return data
