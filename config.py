@@ -17,6 +17,7 @@ class Config:
         """
 
         self.warehouse = os.path.join(os.getcwd(), 'warehouse')
+        self.interactions_ = os.path.join(self.warehouse, 'interactions')
         self.data_ = os.path.join(os.getcwd(), 'data')
 
         # Temporary; future argument, or auto determination.
