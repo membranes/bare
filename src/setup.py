@@ -72,8 +72,7 @@ class Setup:
         # Clean-up, then re-create
         self.__directories.cleanup(path=self.__configurations.warehouse)
 
-
-        return self.__directories.create(path=self.__configurations.warehouse)
+        return self.__directories.create(path=self.__configurations.interactions_)
 
     def exc(self, reacquire: bool) -> bool:
         """
