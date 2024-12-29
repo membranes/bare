@@ -100,7 +100,6 @@ class Mappings:
         # Mapping to detected tokens
         data['code_of_tag_p'] = np.apply_along_axis(func1d=self.__code_of_tag, axis=1, arr=data[['start', 'end']])
         data['code_of_tag_p'] = data['code_of_tag_p'].where(data['code_of_tag_p'] > -1, m_config['label2id']['O'])
-        # data['code_of_tag_p'] = data['code_of_tag_p'].astype(dtype=int)
 
         # Mapping to scores thereof
         data['score'] = np.apply_along_axis(func1d=self.__score, axis=1, arr=data[['start', 'end']])
