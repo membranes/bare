@@ -14,7 +14,8 @@ class Page:
         :param text: An input text; composed of sentences or/and paragraphs
         """
 
-        self.__text = text
+        temporary = text.splitlines()
+        self.__text = ' '.join(temporary)
 
     def __splittings(self) -> list:
         """
@@ -36,6 +37,8 @@ class Page:
             else:
                 place = np.append(place, point[0])
                 text = ''.join([text, point[1]])
+
+        splittings.append({'start': place[0] if len(place) > 0 else np.nan, 'word': text})
 
         return splittings
 
