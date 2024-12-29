@@ -38,10 +38,10 @@ class CLI:
         """
 
         # Sample Text
-        sentence = input('A sentence please: ')
+        text = input('Please input text (Maximum: 2000 Characters): ')
 
         # Re-print the input
-        self.__logger.info('Sentence: %s', sentence)
+        self.__logger.info('Text: %s', text)
 
         # Hence
-        self.__logger.info(self.__classifier(sentence))
+        self.__logger.info(self.__classifier(text))
