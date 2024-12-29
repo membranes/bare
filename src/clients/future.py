@@ -9,11 +9,10 @@ import transformers
 
 import config
 import src.algorithms.interface
-import src.functions.cache
-import src.transfer.interface
-
 import src.elements.s3_parameters as s3p
 import src.elements.service as sr
+import src.functions.cache
+import src.transfer.interface
 
 
 class Future:
