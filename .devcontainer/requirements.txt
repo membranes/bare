@@ -1,4 +1,4 @@
-transformers==4.45.2
+transformers>=4.48.1
 accelerate
 gradio>5.8.0
 dask[complete]>=2024.6.2

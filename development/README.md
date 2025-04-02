@@ -186,6 +186,14 @@ def __selection():
         interactive=True, label='tags')
 ```
 
+<br>
+
+```python
+import datetime
+
+datetime.datetime.now().strftime('%Y-%m-%d')
+```
+
 
 
 <br>
